@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace File_manager.FileManager.ViewModel
 {
@@ -64,6 +65,11 @@ namespace File_manager.FileManager.ViewModel
 
 
             
+        public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileManagerViewModel.Instance.FileOpener.Open(_fileInfo.FullName);
+        }
+
 
         //public override string? => _fileInfo.DirectoryName;
 

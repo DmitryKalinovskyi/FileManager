@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 
@@ -45,11 +46,11 @@ namespace File_manager.FileManager.ViewModel
                     //    _iconBitmap = image.Source.;
                     //}
                     string path = "C:\\Users\\Свєта\\source\\repos\\File manager\\File manager\\FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico";
-                    string path2 = "..\\FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico";
+                   // string path2 = "..\\FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico";
 
 
 
-                    Icon icon = new Icon(path2);
+                    Icon icon = new Icon(path);
 
                     if(icon != null ) 
                     {
@@ -63,6 +64,11 @@ namespace File_manager.FileManager.ViewModel
             {
                 Trace.WriteLine("FileInfoWrapper initialization failed...");
             }
+        }
+
+        public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileManagerViewModel.Instance.FileGrid.Path = _directoryInfo.FullName;
         }
 
         public override Bitmap? IconBitmap => _iconBitmap;

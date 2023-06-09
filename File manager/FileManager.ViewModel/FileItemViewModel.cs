@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace File_manager.FileManager.ViewModel
 {
@@ -22,5 +23,7 @@ namespace File_manager.FileManager.ViewModel
         public abstract string CreationTime { get; }
 
         public abstract string LastEditTime { get; }
+
+        public abstract void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e);
     }
 }

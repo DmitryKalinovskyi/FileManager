@@ -91,5 +91,12 @@ namespace File_manager
                 }
             }), System.Windows.Threading.DispatcherPriority.Background);
         }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedRow = (DataGridRow)sender;
+            var selectedItem = (FileItemViewModel)selectedRow.Item;
+            selectedItem.Row_MouseDoubleClick(sender, e);
+        }
     }
 }

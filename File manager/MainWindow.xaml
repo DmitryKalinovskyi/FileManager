@@ -182,7 +182,8 @@
                     </TreeViewItem>
                 </TreeViewItem>
             </TreeView>
-            <DataGrid RowStyle="{DynamicResource FileGridRowStyle}" 
+            <DataGrid 
+                      
                       ColumnHeaderStyle="{DynamicResource FileGridColumnHeaderStyle}" 
                       RowHeaderStyle="{x:Null}"
                       CellStyle="{DynamicResource FileGridCellStyle}"
@@ -193,6 +194,12 @@
                       AutoGenerateColumns="False"
                       BeginningEdit="DataGrid_BeginningEdit"
                       >
+                <DataGrid.RowStyle>
+                    <Style BasedOn="{StaticResource FileGridRowStyle}"
+                           TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    </Style>
+                </DataGrid.RowStyle>
                 <!--Custom defined columns-->
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Name">
