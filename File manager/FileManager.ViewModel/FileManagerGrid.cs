@@ -63,9 +63,9 @@ namespace File_manager.FileManager.ViewModel
         #endregion
 
         //add directories
-        public ObservableCollection<FileInfoViewModel> Items { get; set; }
+        public ObservableCollection<FileItemViewModel> Items { get; set; }
 
-        private string _path = "C:\\Users";
+        private string _path;
 
         public string Path 
         {
@@ -88,6 +88,14 @@ namespace File_manager.FileManager.ViewModel
 
         public FileManagerGrid()
         {
+            _path = "C:";
+            Items = new();
+            UpdateItems();
+        }
+
+        public FileManagerGrid(string path)
+        {
+            _path = path;
             Items = new();
             UpdateItems();
         }
@@ -95,14 +103,24 @@ namespace File_manager.FileManager.ViewModel
         public void UpdateItems()
         {
             var dir = new DirectoryInfo(_path);
-            var files = dir.GetFiles().Select(x => new FileInfoViewModel(x));
 
             Items.Clear();
+
+            var directories = dir.GetDirectories().Select(x => new DirectoryInfoViewModel(x));
+
+            foreach (var d in directories)
+            {
+                Items.Add(d);
+            }
+
+            var files = dir.GetFiles().Select(x => new FileInfoViewModel(x));
 
             foreach (var file in files)
             {
                 Items.Add(file);
             }
+
+           
         }
     }
 }

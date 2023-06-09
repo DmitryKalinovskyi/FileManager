@@ -17,7 +17,7 @@ namespace File_manager.FileManager.ViewModel
 
         public FileManagerViewModel()
         {
-            FileGrid = new();
+            FileGrid = new("C:\\Users\\Свєта\\Desktop\\IsolatedFolder");
         }
     }
 }

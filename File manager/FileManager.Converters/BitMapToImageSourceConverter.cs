@@ -14,16 +14,15 @@ using System.Diagnostics;
 
 namespace File_manager.FileManager.Converters
 {
-    public class IconToImageSourceConverter : IValueConverter
+    public class BitMapToImageSourceConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
 
-            if(value is Icon icon)
+            if(value is Bitmap bitmap)
             {
-                Bitmap bitmap = icon.ToBitmap();
                 IntPtr hBitmap = bitmap.GetHbitmap();
 
                 ImageSource wpfBitmap =

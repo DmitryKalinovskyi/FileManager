@@ -74,5 +74,22 @@ namespace File_manager
                 e.Handled = true;
             }
         }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+        }
+
+        private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (e.EditingEventArgs.Source is TextBox textBox)
+                {
+                    textBox.Focus();
+                    textBox.SelectAll();
+                }
+            }), System.Windows.Threading.DispatcherPriority.Background);
+        }
     }
 }

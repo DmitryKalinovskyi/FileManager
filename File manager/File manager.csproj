@@ -9,13 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FileManager.Resources\ArtWork\folder-icon-1024x1024.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="FileManager.View\" />
     <Folder Include="FileManager.Services\" />
-    <Folder Include="FileManager.Resources\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="FileManager.Resources\ArtWork\folder-icon-1024x1024.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

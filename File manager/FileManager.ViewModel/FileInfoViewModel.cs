@@ -1,4 +1,5 @@
-﻿using File_manager.FileManager.Model;
+﻿using File_manager.FileManager.Core.ViewModelBase;
+using File_manager.FileManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,10 +14,9 @@ namespace File_manager.FileManager.ViewModel
     /// <summary>
     /// Manages FileInfo in directories and his properties
     /// </summary>
-    public class FileInfoViewModel
+    public class FileInfoViewModel: FileItemViewModel
     {
         private FileInfo _fileInfo;
-
 
         public FileInfoViewModel(FileInfo fileInfo)
         {
@@ -25,7 +25,7 @@ namespace File_manager.FileManager.ViewModel
             Initialize();
         }
 
-        private Icon? _icon;
+        private Bitmap? _iconBitmap;
 
         private void Initialize()
         {
@@ -38,7 +38,7 @@ namespace File_manager.FileManager.ViewModel
 
                 if (path != null)
                 {
-                    _icon = Icon.ExtractAssociatedIcon(path);
+                    _iconBitmap = Icon.ExtractAssociatedIcon(path)?.ToBitmap();
                 }
             }
             catch
@@ -48,33 +48,47 @@ namespace File_manager.FileManager.ViewModel
         }
 
 
-        // Custom definitions
-        public Icon? Icon => _icon;
+        public override Bitmap? IconBitmap => _iconBitmap;
 
-        public string Name => _fileInfo.Name;
+        public override string Name
+        {
+            get { return _fileInfo.Name; }
+            set
+            {
+                // Rename
+                Rename(value);
 
-        // Definitions for DataGrid
-        public string Attribute => _fileInfo.Attributes.ToString();
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
-        public string? Path => _fileInfo.DirectoryName;
 
-        public string Type => _fileInfo.Extension;
+            
 
-        public string CreationTime => _fileInfo.CreationTime.ToString("g");
+        //public override string? => _fileInfo.DirectoryName;
 
-        public string LastEditTime => _fileInfo.LastWriteTime.ToString("g");
+        public override string Extension
+        {
+            get { return _fileInfo.Extension; }
+            set
+            {
+                //change extension
 
-        //public string? Path 
-        //{
-        //    get { return _fileInfo.DirectoryName; }
-        //    set 
-        //    {
-        //        if(value == null && Path
-        //            .)
+                OnPropertyChanged(nameof(Extension));
+            }
+        }
 
-        //        _fileInfo.MoveTo(value);
-        //    }
-        //}
+        public override string CreationTime => _fileInfo.CreationTime.ToString("g");
+         
+        public override string LastEditTime => _fileInfo.LastWriteTime.ToString("g");
 
+        public override string Size => _fileInfo.Length.ToString();
+
+        private void Rename(string newName)
+        {
+            string currentDirectory = _fileInfo.Directory.FullName;
+            string newFilePath = Path.Combine(currentDirectory, newName);
+            _fileInfo.MoveTo(newFilePath);
+        }
     }
 }
