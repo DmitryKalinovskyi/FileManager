@@ -167,7 +167,7 @@
             <TreeView Padding="0,5,8,5"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       DataContext="{Binding FileTree}"
-                      ItemsSource="{Binding Drives}"
+                      ItemsSource="{Binding Items}"
                       TreeViewItem.Expanded="TreeView_Expanded"
                       SelectedItemChanged="TreeView_SelectedItemChanged"
                       >

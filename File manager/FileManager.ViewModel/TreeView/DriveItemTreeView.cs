@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace File_manager.FileManager.ViewModel.TreeView
 {
-    public class DriveItemTreeView : FileItemTreeView
+    public class DriveItemTreeView : DirectoryBehaviorTreeView
     {
         public override string Name { get { return Path; }  }
 
@@ -18,14 +18,12 @@ namespace File_manager.FileManager.ViewModel.TreeView
 
         public DriveItemTreeView(string path): base(path)
         {
-            Items = new() { new EmptyItemTreeView() };
-
             Initialize();
         }
 
         private static Bitmap? _iconBitmap;
 
-        private void Initialize()
+        protected override void Initialize(params object[] args)
         {
             if (_iconBitmap == null)
             {
@@ -36,24 +34,6 @@ namespace File_manager.FileManager.ViewModel.TreeView
                     _iconBitmap = new Icon(path).ToBitmap();
                 }
             }
-        }
-
-
-        public override void UpdateItems()
-        {
-            Items.Clear();
-
-            var items = Directory.GetDirectories(Path).Select(directory => new DirectoryItemTreeView(directory));
-
-            foreach(var item in items)
-            {
-                Items.Add(item);
-            }
-        }
-
-        public override void SelectItem()
-        {
-            FileManagerViewModel.Instance.FileGrid.Path = Path;
         }
     }
 }

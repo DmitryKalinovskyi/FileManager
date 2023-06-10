@@ -9,7 +9,7 @@ namespace File_manager.FileManager.ViewModel.TreeView
 {
     public class EmptyItemTreeView : FileItemTreeView
     {
-        public EmptyItemTreeView():base("")
+        public EmptyItemTreeView()
         { 
         }
 

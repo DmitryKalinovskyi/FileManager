@@ -13,22 +13,17 @@ namespace File_manager.FileManager.ViewModel.TreeView
 {
     public abstract class FileItemTreeView: NotifyViewModel
     {
-        public ObservableCollection<FileItemTreeView> Items { get; set; }
+        public ObservableCollection<FileItemTreeView> Items { get; set; } = new();
 
         public abstract Bitmap? IconBitmap { get; }
 
-        public string Path { get; set; }
-
         public abstract string Name { get; }
-
-        public FileItemTreeView(string path)
-        {
-            Path = path;
-        }
 
         public abstract void UpdateItems();
 
         public abstract void SelectItem();
+
+        protected virtual void Initialize(params object[] args) { }
 
     }
 }
