@@ -31,6 +31,10 @@ namespace File_manager.FileManager.ViewModel
                         {
                             Path = directory.FullName;
                         }
+                        else
+                        {
+                            Path = "";
+                        }
                     }
                     catch(Exception ex)
                     {
@@ -102,9 +106,23 @@ namespace File_manager.FileManager.ViewModel
 
         public void UpdateItems()
         {
-            var dir = new DirectoryInfo(_path);
-
             Items.Clear();
+
+            if (_path == "" || _path == null)
+            {
+                //open drive location
+                var drives = DriveInfo.GetDrives().Select(x => new DriveInfoViewModel(x));
+
+                foreach (var drive in drives)
+                {
+                    Items.Add(drive);
+                }
+
+
+                return;
+            }
+
+            var dir = new DirectoryInfo(_path);
 
             var directories = dir.GetDirectories().Select(x => new DirectoryInfoViewModel(x));
 

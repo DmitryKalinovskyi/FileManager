@@ -84,11 +84,17 @@ namespace File_manager
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (e.EditingEventArgs.Source is TextBox textBox)
+                //need to find textbox
+                var fe = sender as FrameworkElement;
+
+                if(fe != null)
                 {
-                    textBox.Focus();
-                    textBox.SelectAll();
                 }
+                //if (e.EditingEventArgs.Source is TextBox textBox)
+                //{
+                //    textBox.Focus();
+                //    textBox.SelectAll();
+                //}
             }), System.Windows.Threading.DispatcherPriority.Background);
         }
 

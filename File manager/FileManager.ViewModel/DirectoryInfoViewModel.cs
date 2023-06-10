@@ -1,10 +1,12 @@
-﻿using System;
+﻿using File_manager.FileManager.Services.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -34,22 +36,9 @@ namespace File_manager.FileManager.ViewModel
 
                 if (_iconBitmap == null)
                 {
-                    ////Check wheter resource finded 
-                    //var resourceKey = "FolderIcon";
-                    //var resource = App.Current.TryFindResource(resourceKey);
+                    string path = CustomResources.GetResourcePath("FolderIcon");
 
-                    //Trace.WriteLine(resource != null ? "Resource founded!" : "Resource NOT founded");
-
-                    //if(resource is System.Windows.Controls.Image image)
-                    //{
-                    //    Trace.WriteLine("Image gainded");
-                    //    _iconBitmap = image.Source.;
-                    //}
-                    string path = "C:\\Users\\Свєта\\source\\repos\\File manager\\File manager\\FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico";
-                   // string path2 = "..\\FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico";
-
-
-
+                    Trace.WriteLine(path);
                     Icon icon = new Icon(path);
 
                     if(icon != null ) 
