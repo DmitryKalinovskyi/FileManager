@@ -18,6 +18,8 @@ namespace File_manager.FileManager.ValidationRules
             {
                 return new ValidationResult(false, "Path cannot be none");
             }
+            if (path == string.Empty)
+                return ValidationResult.ValidResult;
 
             bool isDirectory = Directory.Exists(path);
 

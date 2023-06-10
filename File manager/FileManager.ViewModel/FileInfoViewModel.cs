@@ -17,7 +17,7 @@ namespace File_manager.FileManager.ViewModel
     /// </summary>
     public class FileInfoViewModel: FileItemViewModel
     {
-        private FileInfo _fileInfo;
+        private readonly FileInfo _fileInfo;
 
         public FileInfoViewModel(FileInfo fileInfo)
         {
@@ -88,7 +88,7 @@ namespace File_manager.FileManager.ViewModel
          
         public override string LastEditTime => _fileInfo.LastWriteTime.ToString("g");
 
-        public override string Size => _fileInfo.Length.ToString();
+        public override long Size => _fileInfo.Length;
 
         private void Rename(string newName)
         {

@@ -1,5 +1,6 @@
 ﻿using File_manager.FileManager.Core.ViewModelBase;
 using File_manager.FileManager.Services;
+using File_manager.FileManager.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace File_manager.FileManager.ViewModel
         public static FileManagerViewModel Instance { get; set; }
 
         public FileManagerGrid FileGrid { get; set; }
+        public FileManagerTreeView FileTree { get; set; }
 
         public IFIleOpener FileOpener { get; set; }
 
@@ -27,6 +29,8 @@ namespace File_manager.FileManager.ViewModel
 
             Instance = this;
             FileGrid = new("C:\\Users\\Свєта\\Desktop\\IsolatedFolder");
+            FileTree = new();
+
             FileOpener = new DefaultFileOpener();
         }
     }

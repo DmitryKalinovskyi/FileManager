@@ -1,5 +1,7 @@
-﻿using System;
+﻿using File_manager.FileManager.Services.Utilities;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,17 +22,38 @@ namespace File_manager.FileManager.ViewModel
             Initialize();
         }
 
+        private static Bitmap? _iconBitmap;
+
         private void Initialize()
         {
-            //load drive icon
+            try
+            {
+
+                if (_iconBitmap == null)
+                {
+                    string? path;
+
+                    if (CustomResources.TryGetResourcePath("DriveIcon", out path))
+                    {
+                        Icon icon = new Icon(path);
+
+                        _iconBitmap = icon.ToBitmap();
+                    }
+                }
+            }
+            catch
+            {
+                Trace.WriteLine("DriveInfo initialization failed");
+            }
+
         }
 
-        public override Bitmap? IconBitmap => null;
+        public override Bitmap? IconBitmap => _iconBitmap;
 
         public override string Name { get => _driveInfo.Name; set { } }
         public override string Extension { get => "Drive"; set { } }
 
-        public override string Size => "?";
+        public override long Size => _driveInfo.TotalSize - _driveInfo.TotalFreeSpace;
 
         public override string CreationTime => "";
 

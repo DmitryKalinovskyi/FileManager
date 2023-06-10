@@ -1,7 +1,9 @@
 ﻿using File_manager.FileManager.Attributes;
 using File_manager.FileManager.ViewModel;
+using File_manager.FileManager.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Text;
@@ -29,33 +31,6 @@ namespace File_manager
 
             DataContext = new FileManagerViewModel();
         }
-
-        //private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        //{
-        //    var propertyName = e.PropertyName;
-
-        //    var dataContext = (sender as FrameworkElement).DataContext;
-        //    var prop = dataContext.GetType().GetProperty(propertyName);
-
-
-
-        //    // Перевіряємо, чи має властивість атрибут DataGridDisplayAttribute
-        //    if (Attribute.IsDefined(prop, typeof(DataGridDisplayAttribute)))
-        //    {
-        //        // Створюємо новий стовпчик для властивості з атрибутом
-        //        var column = new DataGridTextColumn();
-
-        //        // Встановлюємо заголовок стовпчика як назву властивості
-        //        column.Header = e.PropertyName;
-
-        //        // Встановлюємо прив'язку значення властивості до стовпчика
-        //        column.Binding = new Binding(e.PropertyName);
-
-        //        // Додаємо стовпчик до DataGrid
-        //        e.Column = column;
-        //    }
-
-        //}
 
         // Method to unfocus from TextBox by enter
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -103,6 +78,30 @@ namespace File_manager
             var selectedRow = (DataGridRow)sender;
             var selectedItem = (FileItemViewModel)selectedRow.Item;
             selectedItem.Row_MouseDoubleClick(sender, e);
+        }
+
+        private void TreeView_Expanded(object sender, RoutedEventArgs e)
+        {
+            var item = e.OriginalSource as TreeViewItem;
+
+            var fileItem = item.DataContext as FileItemTreeView;
+            if (fileItem != null)
+            {
+                fileItem.UpdateItems();
+            }
+
+        }
+
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+
+            var fileItem = e.NewValue as FileItemTreeView;
+
+            if(fileItem != null)
+            {
+                fileItem.SelectItem();
+            }
         }
     }
 }

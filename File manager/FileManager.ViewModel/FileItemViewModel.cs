@@ -18,7 +18,7 @@ namespace File_manager.FileManager.ViewModel
 
         public abstract string Extension { get; set; }
 
-        public abstract string Size { get; }
+        public abstract long Size { get; }
 
         public abstract string CreationTime { get; }
 

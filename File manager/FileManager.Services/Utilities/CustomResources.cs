@@ -12,7 +12,8 @@ namespace File_manager.FileManager.Services.Utilities
         // All project custom resources
         private static Dictionary<string, string> _relativeResources = new()
         {
-            {"FolderIcon", "FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico"}
+            {"FolderIcon", "FileManager.Resources\\ArtWork\\folder-icon-1024x1024.ico"},
+            {"DriveIcon", "FileManager.Resources\\ArtWork\\Drive.ico"}
         };
 
         public static string GetResourcePath(string resourceName) => PathHelper.RelativePath(_relativeResources[resourceName]);

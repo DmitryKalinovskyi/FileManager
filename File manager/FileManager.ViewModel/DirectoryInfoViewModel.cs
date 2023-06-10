@@ -18,7 +18,7 @@ namespace File_manager.FileManager.ViewModel
 {
     public class DirectoryInfoViewModel : FileItemViewModel
     {
-        private DirectoryInfo _directoryInfo;
+        private readonly DirectoryInfo _directoryInfo;
 
         public DirectoryInfoViewModel(DirectoryInfo directoryInfo)
         {
@@ -36,22 +36,19 @@ namespace File_manager.FileManager.ViewModel
 
                 if (_iconBitmap == null)
                 {
-                    string path = CustomResources.GetResourcePath("FolderIcon");
+                    string? path;
 
-                    Trace.WriteLine(path);
-                    Icon icon = new Icon(path);
-
-                    if(icon != null ) 
+                    if(CustomResources.TryGetResourcePath("FolderIcon", out path))
                     {
-                        Trace.WriteLine("Icon founded!");
+                        Icon icon = new Icon(path);
+
                         _iconBitmap = icon.ToBitmap();
                     }
-
                 }
             }
             catch
             {
-                Trace.WriteLine("FileInfoWrapper initialization failed...");
+                Trace.WriteLine("DirectoryInfo initialization failed");
             }
         }
 
@@ -62,7 +59,7 @@ namespace File_manager.FileManager.ViewModel
 
         public override Bitmap? IconBitmap => _iconBitmap;
 
-        public override string Size => "";
+        public override long Size => -1;
 
         public override string CreationTime => _directoryInfo.CreationTime.ToShortDateString();
 
