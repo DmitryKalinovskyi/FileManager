@@ -92,6 +92,8 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public override string FullName => _fileInfo.FullName;
 
+        public override float Opacity => ((_fileInfo.Attributes & FileAttributes.System) != 0) || ((_fileInfo.Attributes & FileAttributes.Hidden) != 0)?0.5f:1f;
+
         private void Rename(string newName)
         {
             string currentDirectory = _fileInfo.Directory.FullName;

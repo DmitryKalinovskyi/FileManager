@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,13 @@ namespace File_manager.FileManager.Services.FileManaging
 
         public void Open(string path)
         {
-            throw new NotImplementedException();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true
+            };
+
+            Process.Start(startInfo);
         }
 
         public void MoveToDirectory(string sourcePath, string directory)

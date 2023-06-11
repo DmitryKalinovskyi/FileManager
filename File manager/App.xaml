@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="FileManager.Resources\FileGrid.xaml"/>
                 <ResourceDictionary Source="FileManager.Resources\Images.xaml"/>
+                <ResourceDictionary Source="FileManager.Resources\CustomButtons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

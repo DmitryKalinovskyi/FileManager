@@ -9,11 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FileManager.Resources\ArtWork\Back.ico" />
+    <None Remove="FileManager.Resources\ArtWork\desktop-64.ico" />
+    <None Remove="FileManager.Resources\ArtWork\docs-96.ico" />
+    <None Remove="FileManager.Resources\ArtWork\download-96.ico" />
+    <None Remove="FileManager.Resources\ArtWork\Drive.ico" />
+    <None Remove="FileManager.Resources\ArtWork\File-explore.ico" />
     <None Remove="FileManager.Resources\ArtWork\folder-icon-1024x1024.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="FileManager.View\" />
+    <None Remove="FileManager.Resources\ArtWork\image-96.ico" />
+    <None Remove="FileManager.Resources\ArtWork\music-library-96.ico" />
+    <None Remove="FileManager.Resources\ArtWork\MyPc.ico" />
+    <None Remove="FileManager.Resources\ArtWork\Open-folder-add.ico" />
+    <None Remove="FileManager.Resources\ArtWork\PcIcon.ico" />
+    <None Remove="FileManager.Resources\ArtWork\Refresh.ico" />
+    <None Remove="FileManager.Resources\ArtWork\video-96.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +30,46 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="FileManager.Resources\ArtWork\Back.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\desktop-64.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\docs-96.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\download-96.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\Drive.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\File-explore.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="FileManager.Resources\ArtWork\folder-icon-1024x1024.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\image-96.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\music-library-96.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\MyPc.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\Open-folder-add.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\PcIcon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\Refresh.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FileManager.Resources\ArtWork\video-96.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

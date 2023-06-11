@@ -26,6 +26,8 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public abstract string LastEditTime { get; }
 
+        public abstract float Opacity { get; }
+
         public abstract void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e);
     }
 }

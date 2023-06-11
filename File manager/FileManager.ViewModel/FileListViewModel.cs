@@ -16,58 +16,6 @@ namespace File_manager.FileManager.ViewModel
 {
     public class FileListViewModel: NotifyViewModel
     {
-        #region Commands
-
-        private RelayCommand _directoryUpCommand;
-        public RelayCommand DirectoryUpCommand
-        {
-            get
-            {
-                return _directoryUpCommand ?? new RelayCommand((obj) =>
-                {
-                    try
-                    {
-                        DirectoryInfo? directory = Directory.GetParent(Path);
-
-                        if(directory != null)
-                        {
-                            Path = directory.FullName;
-                        }
-                        else
-                        {
-                            Path = "";
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        Trace.WriteLine(ex);
-                    }
-                });
-            }
-        }
-
-        private RelayCommand _openDirectoryCommand;
-        public RelayCommand OpenDirectoryCommand
-        {
-            get
-            {
-                return _openDirectoryCommand ?? new RelayCommand((obj) =>
-                {
-                    try
-                    {
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Trace.WriteLine(ex);
-                    }
-                });
-            }
-        }
-
-        #endregion
-
-        //add directories
         public ObservableCollection<ListItemViewModel> Items { get; set; }
 
         private string _path;
@@ -85,7 +33,7 @@ namespace File_manager.FileManager.ViewModel
                 _path = value;
                 OnPropertyChanged(nameof(Path));
 
-                UpdateItems();
+                LoadItems();
             }
         }
         
@@ -95,17 +43,22 @@ namespace File_manager.FileManager.ViewModel
         {
             _path = "C:";
             Items = new();
-            UpdateItems();
+            LoadItems();
         }
 
         public FileListViewModel(string path)
         {
             _path = path;
             Items = new();
-            UpdateItems();
+            LoadItems();
         }
 
-        public void UpdateItems()
+        public void Update()
+        {
+            LoadItems();
+        }
+
+        public void LoadItems()
         {
             Items.Clear();
 
@@ -119,20 +72,25 @@ namespace File_manager.FileManager.ViewModel
                     Items.Add(drive);
                 }
 
-
                 return;
             }
 
             var dir = new DirectoryInfo(_path);
 
-            var directories = dir.GetDirectories().Select(x => new DirectoryInfoViewModel(x));
+            var directories = dir.GetDirectories()
+                .Where(dir =>
+                (dir.Attributes & FileManagerViewModel.Instance.AllowedAttributes) == dir.Attributes)
+                .Select(x => new DirectoryInfoViewModel(x));
 
             foreach (var d in directories)
             {
                 Items.Add(d);
             }
 
-            var files = dir.GetFiles().Select(x => new FileInfoViewModel(x));
+            var files = dir.GetFiles()
+                .Where(file =>
+                (file.Attributes & FileManagerViewModel.Instance.AllowedAttributes) == file.Attributes)
+                .Select(x => new FileInfoViewModel(x));
 
             foreach (var file in files)
             {

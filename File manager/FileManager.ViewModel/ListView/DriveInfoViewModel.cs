@@ -61,6 +61,8 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public override string FullName => Name;
 
+        public override float Opacity => 1f;
+
         public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             //open drive
