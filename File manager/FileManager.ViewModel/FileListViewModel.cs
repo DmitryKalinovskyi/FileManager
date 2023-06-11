@@ -1,18 +1,20 @@
 ﻿using File_manager.FileManager.Core.Commands;
 using File_manager.FileManager.Core.ViewModelBase;
 using File_manager.FileManager.Model;
+using File_manager.FileManager.ViewModel.ListView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace File_manager.FileManager.ViewModel
 {
-    public class FileManagerGrid: NotifyViewModel
+    public class FileListViewModel: NotifyViewModel
     {
         #region Commands
 
@@ -54,7 +56,6 @@ namespace File_manager.FileManager.ViewModel
                     try
                     {
 
-
                     }
                     catch (Exception ex)
                     {
@@ -67,7 +68,7 @@ namespace File_manager.FileManager.ViewModel
         #endregion
 
         //add directories
-        public ObservableCollection<FileItemViewModel> Items { get; set; }
+        public ObservableCollection<ListItemViewModel> Items { get; set; }
 
         private string _path;
 
@@ -90,14 +91,14 @@ namespace File_manager.FileManager.ViewModel
         
 
 
-        public FileManagerGrid()
+        public FileListViewModel()
         {
             _path = "C:";
             Items = new();
             UpdateItems();
         }
 
-        public FileManagerGrid(string path)
+        public FileListViewModel(string path)
         {
             _path = path;
             Items = new();
@@ -137,8 +138,26 @@ namespace File_manager.FileManager.ViewModel
             {
                 Items.Add(file);
             }
+        }
 
-           
+        public void AddItem(string path)
+        {
+            if(File.Exists(path))
+            {
+                Items.Add(new FileInfoViewModel(new FileInfo(path)));
+            }
+            else if (Directory.Exists(path))
+            {
+                Items.Add(new DirectoryInfoViewModel(new DirectoryInfo(path)));
+            }
+        }
+
+        public void RemoveItem(string path)
+        {
+            var items = Items.Where(item => item.FullName == path);
+
+            foreach (var item in items)
+                Items.Remove(item);
         }
     }
 }

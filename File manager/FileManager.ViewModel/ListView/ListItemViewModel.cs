@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace File_manager.FileManager.ViewModel
+namespace File_manager.FileManager.ViewModel.ListView
 {
-    public abstract class FileItemViewModel : NotifyViewModel
+    public abstract class ListItemViewModel : NotifyViewModel
     {
         public abstract Bitmap? IconBitmap { get; }
 
@@ -19,6 +19,8 @@ namespace File_manager.FileManager.ViewModel
         public abstract string Extension { get; set; }
 
         public abstract long Size { get; }
+
+        public abstract string FullName { get; }
 
         public abstract string CreationTime { get; }
 

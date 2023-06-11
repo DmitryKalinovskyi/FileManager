@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:File_manager"
         xmlns:viewModels="clr-namespace:File_manager.FileManager.ViewModel"
         xmlns:treeView="clr-namespace:File_manager.FileManager.ViewModel.TreeView"
+        xmlns:listView="clr-namespace:File_manager.FileManager.ViewModel.ListView"
         xmlns:converters="clr-namespace:File_manager.FileManager.Converters"
         xmlns:validationRules="clr-namespace:File_manager.FileManager.ValidationRules"
         mc:Ignorable="d"
@@ -76,7 +77,9 @@
             <TabItem Header="Main">
                 <StackPanel Orientation="Horizontal">
                     <GroupBox Header="Creation">
-                        <Label Content="Label"/>
+                        <Grid>
+                            <Button Command="{Binding CreateFolderCommand}">Create new folder</Button>
+                        </Grid>
                     </GroupBox>
                 </StackPanel>
             </TabItem>
@@ -169,13 +172,19 @@
                       DataContext="{Binding FileTree}"
                       ItemsSource="{Binding Items}"
                       TreeViewItem.Expanded="TreeView_Expanded"
+                      TreeViewItem.Collapsed="TreeView_Collapsed"
                       SelectedItemChanged="TreeView_SelectedItemChanged"
                       >
+                <TreeView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource {x:Type TreeViewItem}}" TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate
-                        DataType="{x:Type treeView:FileItemTreeView}" 
-                        ItemsSource="{Binding Items}">
-                        
+                        DataType="{x:Type treeView:TreeItemViewModel}" 
+                        ItemsSource="{Binding Items}"
+                        >
                         <StackPanel Orientation="Horizontal">
                             <Image Height="14"
                                    Width="14"
@@ -190,8 +199,68 @@
                 </TreeView.ItemTemplate>
                 
             </TreeView>
-            <DataGrid 
+
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+            <ListView ItemsSource="{Binding Items}"
+                      DataContext="{Binding FileGrid}"
+                      AllowDrop="True"
+                      Drop="ListView_Drop"
+                      DragEnter="ListView_DragEnter"
                       
+                      >
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
+                            
+                            <!--Drag and move-->
+                            <EventSetter Event="Drop" Handler="ListBoxItem_Drop"/>
+                            <EventSetter Event="DragEnter" Handler="ListBoxItem_DragEnter"/>
+                            <EventSetter Event="MouseMove" Handler="ListBoxItem_MouseMove"/>
+                            
+                            <Setter Property="AllowDrop" Value="True"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            
+                            <GridView.Columns>
+                                <GridViewColumn Width="300" Header="Name">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate
+                                        DataType="{x:Type DataGridCell}"
+                                          >
+                                        <StackPanel Orientation="Horizontal" Margin="0">
+                                            <Image Source="{Binding IconBitmap,
+                                        Converter={StaticResource BitMapToImageSourceConverter}}"
+                                           Width="14"
+                                           Height="14"
+                                           Margin="5, 2, 5, 2"
+                                           ></Image>
+                                            <TextBlock Text="{Binding Name, Mode=OneWay}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding LastEditTime}" 
+                                                Header="Last edit time"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Extension}" 
+                                            Header="Type"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Size, Converter={StaticResource FileSizeFormatConverter}, Mode=OneWay}" 
+                                Header="Size"/>
+                            </GridView.Columns>
+                            
+                        </GridView>
+                    </ListView.View>
+            </ListView>
+            
+            <DataGrid 
                       ColumnHeaderStyle="{DynamicResource FileGridColumnHeaderStyle}" 
                       RowHeaderStyle="{x:Null}"
                       CellStyle="{DynamicResource FileGridCellStyle}"
@@ -201,11 +270,12 @@
                       ItemsSource="{Binding Items}"
                       AutoGenerateColumns="False"
                       BeginningEdit="DataGrid_BeginningEdit"
+                
                       >
                 <DataGrid.RowStyle>
                     <Style BasedOn="{StaticResource FileGridRowStyle}"
                            TargetType="DataGridRow">
-                        <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
                     </Style>
                 </DataGrid.RowStyle>
 
@@ -218,7 +288,11 @@
                                             >
                         <DataGridTemplateColumn.CellTemplate>
 
-                            <DataTemplate>
+                            <DataTemplate DataType="{x:Type DataGridCell}"
+                                          >
+                                <DataTemplate.Triggers>
+                                    <EventTrigger RoutedEvent="PreviewDragOver" ></EventTrigger>
+                                </DataTemplate.Triggers>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding IconBitmap,
                                         Converter={StaticResource BitMapToImageSourceConverter}}"
@@ -259,6 +333,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+        </Grid>
+
 
         <!--Information panel-->
         <StackPanel>

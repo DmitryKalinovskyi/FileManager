@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace File_manager.FileManager.ViewModel.TreeView
 {
-    public class FileGroupTreeView : FileItemTreeView
+    public class FileGroupTreeView : TreeItemViewModel
     {
-       
-
         public FileGroupTreeView(string iconResourceName, string shortcutName)
         {
             _shortcutName = shortcutName;
@@ -44,25 +42,5 @@ namespace File_manager.FileManager.ViewModel.TreeView
         public override Bitmap? IconBitmap => _iconBitmap;
 
         public override string Name => _shortcutName;
-
-        public override void SelectItem()
-        {
-            // reference to FileGrid are not defined
-        }
-
-        public override void UpdateItems()
-        {
-            // ?
-        }
-
-        public void AddItem(FileItemTreeView item)
-        {
-            Items.Add(item);
-        }
-
-        public void RemoveItem(FileItemTreeView item)
-        {
-            Items.Remove(item);
-        }
     }
 }

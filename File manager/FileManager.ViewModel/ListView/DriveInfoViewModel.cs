@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace File_manager.FileManager.ViewModel
+namespace File_manager.FileManager.ViewModel.ListView
 {
-    public class DriveInfoViewModel : FileItemViewModel
+    public class DriveInfoViewModel : ListItemViewModel
     {
         private readonly DriveInfo _driveInfo;
 
@@ -58,6 +58,8 @@ namespace File_manager.FileManager.ViewModel
         public override string CreationTime => "";
 
         public override string LastEditTime => "";
+
+        public override string FullName => Name;
 
         public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

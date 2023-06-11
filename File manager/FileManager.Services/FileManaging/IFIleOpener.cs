@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File_manager.FileManager.Services
+namespace File_manager.FileManager.Services.FileManaging
 {
     public interface IFIleOpener
     {

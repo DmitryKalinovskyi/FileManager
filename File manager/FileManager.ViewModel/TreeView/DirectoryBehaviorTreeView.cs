@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace File_manager.FileManager.ViewModel.TreeView
 {
-    public abstract class DirectoryBehaviorTreeView: FileItemTreeView
+    public abstract class DirectoryBehaviorTreeView: TreeItemViewModel, ILazyLoader, IDynamicTreeViewItem, ISelectableTreeItem
     {
         public string Path { get; set; }
 
@@ -20,7 +20,7 @@ namespace File_manager.FileManager.ViewModel.TreeView
             Items = new() { new EmptyItemTreeView() };
         }
 
-        public override void UpdateItems()
+        public void UpdateItems()
         {
             Items.Clear();
 
@@ -32,9 +32,39 @@ namespace File_manager.FileManager.ViewModel.TreeView
             }
         }
 
-        public override void SelectItem()
+        public void Select()
         {
             FileManagerViewModel.Instance.FileGrid.Path = Path;
+        }
+
+        public void Load()
+        {
+            Items.Clear();
+            var items = Directory.GetDirectories(Path).Select(directory => new DirectoryItemTreeView(directory));
+
+            foreach (var item in items)
+            {
+                Items.Add(item);
+            }
+        }
+
+        public void Unload()
+        {
+            Items.Clear();
+            Items.Add(new EmptyItemTreeView());
+        }
+
+        public void Update()
+        {
+            if (IsExpanded == false)
+                return;
+
+
+            foreach(var item in Items)
+            {
+                if (item is DirectoryBehaviorTreeView treeViewItem)
+                    treeViewItem.Update();
+            }
         }
     }
 }

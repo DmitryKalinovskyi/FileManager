@@ -1,5 +1,6 @@
 ﻿using File_manager.FileManager.Core.ViewModelBase;
 using File_manager.FileManager.Services.Utilities;
+using File_manager.FileManager.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File_manager.FileManager.ViewModel.TreeView
+namespace File_manager.FileManager.ViewModel
 {
-    public class FileManagerTreeView: NotifyViewModel
+    public class FIleTreeViewModel: NotifyViewModel
     {
-        public ObservableCollection<FileItemTreeView> Items{ get; set; }
+        public ObservableCollection<TreeItemViewModel> Items{ get; set; }
 
-        public FileManagerTreeView()
+        public FIleTreeViewModel()
         {
             Items = new();
 
@@ -23,13 +24,23 @@ namespace File_manager.FileManager.ViewModel.TreeView
 
         private void Initialize()
         {
+            CreatePCTreeView();
+            CreateShortCutTreeView();
+        }
+
+        private void CreateShortCutTreeView()
+        {
+            //shortcuts
+
+        }
+        private void CreatePCTreeView()
+        {
             FileGroupTreeView MyPc = new FileGroupTreeView("PcIcon", "My pc");
 
             // load drives
             var drives = DriveInfo.GetDrives().Select(drive => new DriveItemTreeView(drive.Name));
 
             // add important folders
-
             var specialFolders = new string[]
             {
                 "Desktop",
@@ -40,36 +51,19 @@ namespace File_manager.FileManager.ViewModel.TreeView
                 "Videos"
             };
 
-            foreach(string folder in specialFolders)
+            foreach (string folder in specialFolders)
             {
                 var path = PathHelper.GetSpecialFolder(folder);
 
-                MyPc.AddItem(new ShortcutItemTreeView(path, folder + "Icon", folder));
+                MyPc.Items.Add(new ShortcutItemTreeView(path, folder + "Icon", folder));
             }
 
-            foreach(var drive in drives)
+            foreach (var drive in drives)
             {
-                MyPc.AddItem(drive);
+                MyPc.Items.Add(drive);
             }
 
             Items.Add(MyPc);
-
-            // Load all drives
-            //LoadDrives();
-
-            //Initialize pc icon
         }
-
-        //private void LoadDrives()
-        //{
-        //    var drives = DriveInfo.GetDrives().Select(drive => new DriveItemTreeView(drive.Name));
-
-        //    foreach(var drive in drives)
-        //    {
-        //        Drives.Add(drive);
-        //    }
-        //}
-
-
     }
 }

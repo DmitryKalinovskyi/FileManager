@@ -14,9 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 
-namespace File_manager.FileManager.ViewModel
+namespace File_manager.FileManager.ViewModel.ListView
 {
-    public class DirectoryInfoViewModel : FileItemViewModel
+    public class DirectoryInfoViewModel : ListItemViewModel
     {
         private readonly DirectoryInfo _directoryInfo;
 
@@ -83,6 +83,8 @@ namespace File_manager.FileManager.ViewModel
                 //nothing todo
             }
         }
+
+        public override string FullName => _directoryInfo.FullName;
 
         private void Rename(string newName)
         {

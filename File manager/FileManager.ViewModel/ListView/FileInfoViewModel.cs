@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace File_manager.FileManager.ViewModel
+namespace File_manager.FileManager.ViewModel.ListView
 {
     /// <summary>
     /// Manages FileInfo in directories and his properties
     /// </summary>
-    public class FileInfoViewModel: FileItemViewModel
+    public class FileInfoViewModel: ListItemViewModel
     {
         private readonly FileInfo _fileInfo;
 
@@ -67,7 +67,7 @@ namespace File_manager.FileManager.ViewModel
             
         public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            FileManagerViewModel.Instance.FileOpener.Open(_fileInfo.FullName);
+            FileManagerViewModel.Instance.FileManager.Open(_fileInfo.FullName);
         }
 
 
@@ -89,6 +89,8 @@ namespace File_manager.FileManager.ViewModel
         public override string LastEditTime => _fileInfo.LastWriteTime.ToString("g");
 
         public override long Size => _fileInfo.Length;
+
+        public override string FullName => _fileInfo.FullName;
 
         private void Rename(string newName)
         {

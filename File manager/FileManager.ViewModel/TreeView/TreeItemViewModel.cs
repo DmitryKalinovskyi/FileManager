@@ -11,17 +11,21 @@ using System.Windows.Shapes;
 
 namespace File_manager.FileManager.ViewModel.TreeView
 {
-    public abstract class FileItemTreeView: NotifyViewModel
+    public abstract class TreeItemViewModel: NotifyViewModel
     {
-        public ObservableCollection<FileItemTreeView> Items { get; set; } = new();
+        public ObservableCollection<TreeItemViewModel> Items { get; set; } = new();
 
         public abstract Bitmap? IconBitmap { get; }
 
         public abstract string Name { get; }
 
-        public abstract void UpdateItems();
+        public bool IsExpanded { get; set; }
 
-        public abstract void SelectItem();
+        //public abstract void UpdateItems();
+
+        //public abstract void LoadItems();
+
+        //public abstract void UnloadItems();
 
         protected virtual void Initialize(params object[] args) { }
 
