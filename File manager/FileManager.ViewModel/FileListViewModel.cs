@@ -8,15 +8,21 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Policy;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace File_manager.FileManager.ViewModel
 {
     public class FileListViewModel: NotifyViewModel
     {
         public ObservableCollection<ListItemViewModel> Items { get; set; }
+
+        private FileSystemWatcher _systemWatcher;
 
         private string _path;
 
@@ -33,36 +39,71 @@ namespace File_manager.FileManager.ViewModel
                 _path = value;
                 OnPropertyChanged(nameof(Path));
 
-                LoadItems();
+                OpenPath();
             }
         }
         
-
-
         public FileListViewModel()
         {
-            _path = "C:";
+            _path = "";
             Items = new();
-            LoadItems();
+            OpenPath();
         }
 
         public FileListViewModel(string path)
         {
             _path = path;
             Items = new();
-            LoadItems();
+            OpenPath();
         }
 
-        public void Update()
+        public void DirectoryUpdated(object sender, FileSystemEventArgs e)
         {
-            LoadItems();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                UpdateItems();
+                Trace.WriteLine("System item deleted or created!!");
+            }
+            );
         }
 
-        public void LoadItems()
+        private void fileSystemItemRenamed(object sender, RenamedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                UpdateItems();
+                Trace.WriteLine("Sysetm item renamed!!");
+            }
+            );
+        }
+
+        public void OpenPath()
+        {
+            if (_systemWatcher != null)
+            {
+                _systemWatcher.Dispose();
+            }
+            if (_path != null && string.IsNullOrWhiteSpace(_path) == false)
+            {
+                _systemWatcher = new FileSystemWatcher(_path);
+
+                _systemWatcher.IncludeSubdirectories = false;
+                _systemWatcher.Renamed += fileSystemItemRenamed;
+                _systemWatcher.Created += DirectoryUpdated;
+                _systemWatcher.Deleted += DirectoryUpdated;
+
+                _systemWatcher.EnableRaisingEvents = true;
+            }
+
+
+            UpdateItems();
+        }
+
+        public void UpdateItems()
         {
             Items.Clear();
 
-            if (_path == "" || _path == null)
+            if (string.IsNullOrWhiteSpace(_path) || _path == null)
             {
                 //open drive location
                 var drives = DriveInfo.GetDrives().Select(x => new DriveInfoViewModel(x));
@@ -98,24 +139,24 @@ namespace File_manager.FileManager.ViewModel
             }
         }
 
-        public void AddItem(string path)
-        {
-            if(File.Exists(path))
-            {
-                Items.Add(new FileInfoViewModel(new FileInfo(path)));
-            }
-            else if (Directory.Exists(path))
-            {
-                Items.Add(new DirectoryInfoViewModel(new DirectoryInfo(path)));
-            }
-        }
+        //public void AddItem(string path)
+        //{
+        //    if(File.Exists(path))
+        //    {
+        //        Items.Add(new FileInfoViewModel(new FileInfo(path)));
+        //    }
+        //    else if (Directory.Exists(path))
+        //    {
+        //        Items.Add(new DirectoryInfoViewModel(new DirectoryInfo(path)));
+        //    }
+        //}
 
-        public void RemoveItem(string path)
-        {
-            var items = Items.Where(item => item.FullName == path);
+        //public void RemoveItem(string path)
+        //{
+        //    var items = Items.Where(item => item.FullName == path);
 
-            foreach (var item in items)
-                Items.Remove(item);
-        }
+        //    foreach (var item in items)
+        //        Items.Remove(item);
+        //}
     }
 }

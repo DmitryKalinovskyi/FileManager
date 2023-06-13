@@ -2,6 +2,7 @@
 using File_manager.FileManager.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -19,10 +20,15 @@ namespace File_manager.FileManager.ViewModel.ListView
     {
         private readonly FileInfo _fileInfo;
 
+      //  public FileAttributes FileAttributes { get; set; }
+
+     //   public ObservableCollection<FileAttributes> EditableAttributes = new ObservableCollection<FileAttributes> { FileAttributes.Hidden };
+
+     //   public ObservableCollection<FileAttributes> DisplayableAttributes = new ObservableCollection<FileAttributes> { FileAttributes.System };
+
         public FileInfoViewModel(FileInfo fileInfo)
         {
             _fileInfo = fileInfo;
-
             Initialize();
         }
 
@@ -51,37 +57,39 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public override Bitmap? IconBitmap => _iconBitmap;
 
-        public override string Name
+        public override string DisplayedName
         {
-            get { return _fileInfo.Name; }
-            set
-            {
-                // Rename
-                Rename(value);
+            get {
+                string name = _fileInfo.Name;
 
-                OnPropertyChanged(nameof(Name));
+                if (FileManagerViewModel.Instance.ShowExtension)
+                {
+                    return name;
+                }
+                else
+                {
+                    return Path.GetFileNameWithoutExtension(name);
+                }
             }
         }
 
-
-            
-        public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public override string Name
         {
-            FileManagerViewModel.Instance.FileManager.Open(_fileInfo.FullName);
+            get
+            {
+                return _fileInfo.Name;
+            }
         }
 
-
-        //public override string? => _fileInfo.DirectoryName;
+        public override void Open()
+        {
+            // Open file
+            FileManagerViewModel.Instance.FileManager.Open(_fileInfo.FullName);
+        }
 
         public override string Extension
         {
             get { return _fileInfo.Extension; }
-            set
-            {
-                //change extension
-
-                OnPropertyChanged(nameof(Extension));
-            }
         }
 
         public override string CreationTime => _fileInfo.CreationTime.ToString("g");
@@ -94,11 +102,6 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public override float Opacity => ((_fileInfo.Attributes & FileAttributes.System) != 0) || ((_fileInfo.Attributes & FileAttributes.Hidden) != 0)?0.5f:1f;
 
-        private void Rename(string newName)
-        {
-            string currentDirectory = _fileInfo.Directory.FullName;
-            string newFilePath = Path.Combine(currentDirectory, newName);
-            _fileInfo.MoveTo(newFilePath);
-        }
+        public override bool IsDirectory => false;
     }
 }

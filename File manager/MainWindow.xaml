@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:File_manager"
+        xmlns:clr="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModels="clr-namespace:File_manager.FileManager.ViewModel"
         xmlns:treeView="clr-namespace:File_manager.FileManager.ViewModel.TreeView"
         xmlns:listView="clr-namespace:File_manager.FileManager.ViewModel.ListView"
@@ -11,22 +12,24 @@
         xmlns:validationRules="clr-namespace:File_manager.FileManager.ValidationRules"
         mc:Ignorable="d"
         Icon="FileManager.Resources/ArtWork/File-explore.ico"
-        Title="File Manager" Height="450" Width="800">
+        Title="File Manager" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ControlTemplate x:Key="ValidationTemplate">
             <DockPanel>
                 <Border BorderBrush="Red" BorderThickness="1">
                     <AdornedElementPlaceholder />
                 </Border>
-                <TextBlock Text="{Binding [0].ErrorContent}"
+                <!--<TextBlock Text="{Binding [0].ErrorContent}"
                        Foreground="Red"
                        Margin="5,0,0,0"
-                       DockPanel.Dock="Right" />
+                       DockPanel.Dock="Right" />-->
             </DockPanel>
         </ControlTemplate>
 
         <converters:BitMapToImageSourceConverter x:Key="BitMapToImageSourceConverter" />
         <converters:FileSizeFormatConverter x:Key="FileSizeFormatConverter" />
+        <converters:IconByFileExtensionConverter x:Key="IconByFileExtensionConverter" />
     </Window.Resources>
 
     <Grid>
@@ -51,7 +54,7 @@
             </RowDefinition>
             
             <!--Information row-->
-            <RowDefinition Height="20">
+            <RowDefinition Height="auto">
             </RowDefinition>
         </Grid.RowDefinitions>
         
@@ -59,14 +62,7 @@
         <!--Commands-->
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="ficha">
-                </MenuItem>
-                <MenuItem Header="ficha1">
-                </MenuItem>
-                <MenuItem Header="ficha2">
-                </MenuItem>
-
-                <MenuItem Header="Information"/>
+                <MenuItem Header="Information" Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
         
@@ -75,33 +71,66 @@
         <TabControl Height="120"
                     VerticalAlignment="Top"
                     Grid.Row="1">
+
+            <TabControl.Resources>
+                <Style TargetType="Button" x:Key="DefaultButton"
+                                        BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Main">
                 <StackPanel Orientation="Horizontal">
                     <GroupBox Header="Creation">
                         <Grid>
-                            <Button Command="{Binding CreateFolderCommand}">
-                                <Button.Style>
-                                    <Style TargetType="Button"
-                                        BasedOn="{StaticResource {x:Type Button}}">
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                    </Style>
-                                </Button.Style>
-                                <Image Source="FileManager.Resources/ArtWork/Open-folder-add.ico"/>
-
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button Command="{Binding CreateFolderCommand}"
+                                    Style="{StaticResource DefaultButton}">
+                                <StackPanel >
+                                    <Image Source="FileManager.Resources/ArtWork/Open-folder-add.ico"
+                                           Width="40"/>
+                                    <TextBlock>Create folder</TextBlock>
+                                </StackPanel>
                             </Button>
+
+                            <StackPanel Grid.Column="1">
+                                <StackPanel.Resources>
+                                    <clr:String x:Key="txtExt">.txt</clr:String>
+                                </StackPanel.Resources>
+                                <Button 
+                                    Style="{StaticResource DefaultButton}"
+                                    Command="{Binding CreateFileCommand}"
+                                    CommandParameter=".txt">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Source={StaticResource txtExt},
+                                            Converter={StaticResource IconByFileExtensionConverter}}"
+                                           Width="16"/>
+                                        <TextBlock VerticalAlignment="Center">Create file</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </GroupBox>
                 </StackPanel>
             </TabItem>
             <TabItem Header="View">
-                <StackPanel>
+                <StackPanel Orientation="Horizontal">
                     <GroupBox Header="File types">
                         <StackPanel>
                             
                         <CheckBox IsChecked="{Binding IsSystem}">System files</CheckBox>
                             <CheckBox IsChecked="{Binding IsReadOnly}">Readonly files </CheckBox>
                         <CheckBox IsChecked="{Binding IsHidden}">Hidden files</CheckBox>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Displaying ">
+                        <StackPanel>
+                            <CheckBox IsChecked="{Binding ShowExtension}">Show extension</CheckBox>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -137,7 +166,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="5"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="0"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 
                 <!--Path field-->
@@ -211,13 +240,13 @@
                         ItemsSource="{Binding Items}"
                         >
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="14"
-                                   Width="14"
+                            <Image Height="16"
+                                   Width="16"
                                            Margin="0, 2, 5, 2"
                                    
                                    Source="{Binding IconBitmap,
                                 Converter={StaticResource BitMapToImageSourceConverter}}"></Image>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
                         </StackPanel>
 
                     </HierarchicalDataTemplate>
@@ -231,13 +260,41 @@
                     <ColumnDefinition Width="0"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 
-            <ListView ItemsSource="{Binding Items}"
+            <ListView Name="FileListView"
+                ItemsSource="{Binding Items}"
                       DataContext="{Binding FileGrid}"
                       AllowDrop="True"
+                      SelectionMode="Extended"
                       Drop="ListView_Drop"
                       DragEnter="ListView_DragEnter"
+                      MouseMove="FileListView_MouseMove"
                       
                       >
+                    <ListView.Resources>
+                        <ContextMenu x:Key="ListViewContextMenu">
+                            <!--<MenuItem Command="Cut"/>
+                            <MenuItem Command="Copy"/>
+                            <MenuItem Command="Paste"/>-->
+
+                            <MenuItem Header="Open"
+                                        FontWeight="Bold"
+                                        Command="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenItem}"
+                                        CommandParameter="{Binding}"
+                                        />
+                            <MenuItem Header="Open in new window"
+                                        IsEnabled="{Binding IsDirectory}"
+                                        Command="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenInNewWindow}"
+                                        CommandParameter="{Binding FullName}"/>
+                            <MenuItem Header="Delete"
+                                      Command="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.DeleteItemCommand}"
+                                      CommandParameter="{Binding FullName}"/>
+
+                            <MenuItem  Header="Properties"
+                                       Command="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenProperties}"
+                                        CommandParameter="{Binding}"/>
+
+                        </ContextMenu>
+                    </ListView.Resources>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
@@ -250,13 +307,15 @@
                             <Setter Property="AllowDrop" Value="True"/>
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="Padding" Value="0"/>
+
+                            <Setter Property="ContextMenu" Value="{StaticResource ListViewContextMenu}" />
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
-                            
                             <GridView.Columns>
-                                <GridViewColumn Width="300" Header="Name">
+                                <GridViewColumn Width="400" Header="Name">
+                                    
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate
                                         DataType="{x:Type DataGridCell}"
@@ -264,21 +323,22 @@
                                         <StackPanel Orientation="Horizontal" Margin="0">
                                             <Image Source="{Binding IconBitmap,
                                         Converter={StaticResource BitMapToImageSourceConverter}}"
-                                           Width="14"
-                                           Height="14"
+                                           Width="16"
+                                           Height="16"
                                            Margin="5, 2, 5, 2"
                                                    Opacity="{Binding Opacity}"
                                            ></Image>
-                                            <TextBlock Text="{Binding Name, Mode=OneWay}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding DisplayedName, Mode=OneWay}"></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding LastEditTime}" 
+                                <GridViewColumn Width="200"
+                                    DisplayMemberBinding="{Binding LastEditTime}" 
                                                 Header="Last edit time"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Extension}" 
+                                <GridViewColumn Width="100" DisplayMemberBinding="{Binding Extension}" 
                                             Header="Type"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Size, Converter={StaticResource FileSizeFormatConverter}, Mode=OneWay}" 
+                                <GridViewColumn Width="100" DisplayMemberBinding="{Binding Size, Converter={StaticResource FileSizeFormatConverter}, Mode=OneWay}" 
                                 Header="Size"/>
                             </GridView.Columns>
                             
@@ -286,7 +346,7 @@
                     </ListView.View>
             </ListView>
             
-            <DataGrid 
+            <!--<DataGrid 
                       ColumnHeaderStyle="{DynamicResource FileGridColumnHeaderStyle}" 
                       RowHeaderStyle="{x:Null}"
                       CellStyle="{DynamicResource FileGridCellStyle}"
@@ -308,7 +368,7 @@
                 <DataGrid.Resources>
                     
                 </DataGrid.Resources>
-                <!--Custom defined columns-->
+                --><!--Custom defined columns--><!--
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Name"
                                             >
@@ -357,13 +417,22 @@
                     <DataGridTextColumn Header="Size"
                                         Binding="{Binding Size, Converter={StaticResource FileSizeFormatConverter}, Mode=OneWay}"/>
                 </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
         </Grid>
         </Grid>
 
 
         <!--Information panel-->
-        <StackPanel>
-        </StackPanel>
+        <DockPanel Grid.Row="4">
+            <Label DataContext="{Binding FileGrid}"
+                   Content="{Binding Items.Count}"
+                   ContentStringFormat="Items count: {0}"
+                   Margin="5, 0, 5, 0"
+                   />
+
+            <Label Content="{Binding ElementName=FileListView, Path=SelectedItems.Count}"
+                   ContentStringFormat="Selected items count: {0}"
+                   Margin="5,0,5,0"/>
+        </DockPanel>
     </Grid>
 </Window>

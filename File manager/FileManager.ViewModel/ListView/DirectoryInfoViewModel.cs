@@ -52,8 +52,9 @@ namespace File_manager.FileManager.ViewModel.ListView
             }
         }
 
-        public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public override void Open()
         {
+            // Open directory
             FileManagerViewModel.Instance.FileGrid.Path = _directoryInfo.FullName;
         }
 
@@ -68,32 +69,30 @@ namespace File_manager.FileManager.ViewModel.ListView
         public override string Name 
         {
             get { return _directoryInfo.Name; }
-            set {
-                //change folder name
-
-                Rename(value);
-
-                OnPropertyChanged(nameof(Name));
-            }
         }
         public override string Extension 
         {
             get { return "Folder"; }
-            set {
-                //nothing todo
-            }
         }
 
         public override string FullName => _directoryInfo.FullName;
 
         public override float Opacity => ((_directoryInfo.Attributes & FileAttributes.System) != 0) || ((_directoryInfo.Attributes & FileAttributes.Hidden) != 0) ? 0.5f : 1f;
 
-        private void Rename(string newName)
-        {
-            string currentDirectory = _directoryInfo.Root.FullName;
-            string newFilePath = Path.Combine(currentDirectory, newName);
-            _directoryInfo.MoveTo(newFilePath);
-        }
+        public override bool IsDirectory => true;
+
+        public override string DisplayedName => _directoryInfo.Name;
+
+        //private void Rename(string newName)
+        //{
+        //    string currentDirectory = Path.GetDirectoryName(_directoryInfo.FullName);
+
+        //    string from = Path.Combine(currentDirectory, _directoryInfo.Name);
+        //    string to = Path.Combine(currentDirectory, newName);
+
+        //    Trace.WriteLine($"Moving from {from} to {to}");
+        //    _directoryInfo.MoveTo(to);
+        //}
 
         // Undefined
     }

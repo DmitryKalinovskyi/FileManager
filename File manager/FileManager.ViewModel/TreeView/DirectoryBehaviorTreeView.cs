@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace File_manager.FileManager.ViewModel.TreeView
 {
-    public abstract class DirectoryBehaviorTreeView: TreeItemViewModel, ILazyLoader, ISelectableTreeItem
+    public abstract class DirectoryBehaviorTreeView: DynamicTreeItemViewModel, ILazyLoader, ISelectableTreeItem
     {
         public string Path { get; set; }
 

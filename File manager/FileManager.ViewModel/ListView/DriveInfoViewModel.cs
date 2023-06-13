@@ -45,13 +45,13 @@ namespace File_manager.FileManager.ViewModel.ListView
             {
                 Trace.WriteLine("DriveInfo initialization failed");
             }
-
         }
 
         public override Bitmap? IconBitmap => _iconBitmap;
 
-        public override string Name { get => _driveInfo.Name; set { } }
-        public override string Extension { get => "Drive"; set { } }
+
+        public override string Name { get => _driveInfo.Name; }
+        public override string Extension { get => "Drive"; }
 
         public override long Size => _driveInfo.TotalSize - _driveInfo.TotalFreeSpace;
 
@@ -63,9 +63,13 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public override float Opacity => 1f;
 
-        public override void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public override bool IsDirectory => true;
+
+        public override string DisplayedName => "Local drive " + Name;
+
+        public override void Open()
         {
-            //open drive
+            // Open drive
             FileManagerViewModel.Instance.FileGrid.Path = _driveInfo.Name;
 
         }

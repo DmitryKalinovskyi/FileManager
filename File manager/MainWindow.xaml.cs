@@ -1,8 +1,10 @@
 ﻿using File_manager.FileManager.Attributes;
+using File_manager.FileManager.View;
 using File_manager.FileManager.ViewModel;
 using File_manager.FileManager.ViewModel.ListView;
 using File_manager.FileManager.ViewModel.TreeView;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
@@ -30,8 +32,6 @@ namespace File_manager
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new FileManagerViewModel();
         }
 
         // Method to unfocus from TextBox by enter
@@ -79,7 +79,7 @@ namespace File_manager
         {
             var selectedRow = (DataGridRow)sender;
             var selectedItem = (ListItemViewModel)selectedRow.Item;
-            selectedItem.Row_MouseDoubleClick(sender, e);
+            selectedItem.Open();
         }
 
         #region FileTreeView
@@ -113,27 +113,42 @@ namespace File_manager
         {
             var selectedRow = (ListViewItem)sender;
             var selectedItem = (ListItemViewModel)selectedRow.DataContext;
-            selectedItem.Row_MouseDoubleClick(sender, e);
+            selectedItem.Open();
         }
+
+        #region ListView drag and drop
+
 
         private void ListBoxItem_Drop(object sender, DragEventArgs e)
         {
             if (sender is FrameworkElement frameworkElement && frameworkElement.DataContext is ListItemViewModel viewModel)
             {
-                object DropDataContext = e.Data.GetData(DataFormats.FileDrop);
-
-                if (DropDataContext != null && DropDataContext is string[] paths)
+                try
                 {
-                    if (ListBoxItem_DragEnterValid(paths, viewModel.FullName))
-                    {
-                        Trace.WriteLine("Dropped");
-                    }
-                    else
-                    {
-                        Trace.WriteLine("Drop failed!");
-                    }
 
+                    object DropDataContext = e.Data.GetData(DataFormats.FileDrop);
+
+                    if (DropDataContext != null && DropDataContext is string[] paths)
+                    {
+                        if (FileDropValidation(paths, viewModel.FullName))
+                        {
+                            //Trace.WriteLine("Dropped");
+
+                            // put items inside folder..
+
+                            Trace.WriteLine($"Move [{paths[0]}] into {viewModel.FullName}");
+
+                            object arg = new object[] { paths, viewModel.FullName };
+                            ((FileManagerViewModel)DataContext).DropFilesinDirectoryCommand.Execute(arg);
+                            //((FileManagerViewModel)DataContext).
+                        }
+                    }
                 }
+                catch
+                {
+                    Trace.WriteLine("Incorrect format of dataDrop");
+                }
+
             }
 
             e.Handled = true;
@@ -141,7 +156,6 @@ namespace File_manager
 
         private void ListBoxItem_MouseMove(object sender, MouseEventArgs e)
         {
-            // TODO: selected items drag simulation
             if (e.LeftButton == MouseButtonState.Pressed && sender is ListViewItem item)
             {
                 if(item.DataContext is ListItemViewModel viewModel)
@@ -153,16 +167,10 @@ namespace File_manager
             }
         }
 
-        private bool ListBoxItem_DragEnterValid(string[] data, string source)
+        private bool FileDropValidation(string[] data, string destinationSource)
         {
-            if (data.Contains(source))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            // We can't put folder inside self
+            return !data.Contains(destinationSource);
         }
 
         private void ListBoxItem_DragEnter(object sender, DragEventArgs e)
@@ -173,51 +181,23 @@ namespace File_manager
 
                 if (DropDataContext != null && DropDataContext is string[] paths)
                 {
-                    if (ListBoxItem_DragEnterValid(paths, viewModel.FullName))
+                    if (FileDropValidation(paths, viewModel.FullName))
                     {
+                        // display possibility of drop
                     }
-                    else
-                    {
-                    }
-
                 }
             }
 
             e.Handled = true;
-
-
-            //Trace.WriteLine("Initial " + sender.GetType());
-
-            //if (sender is FrameworkElement frameworkElement)
-            //{
-            //    object DropDataContext = e.Data.GetData(DataFormats.FileDrop);
-            //    // is allowed?
-
-
-
-            //    if (DropDataContext == frameworkElement.DataContext)
-            //        return;
-
-            //    if(DropDataContext is FileItemViewModel)
-            //        Trace.WriteLine("Entered to other object");
-
-            //    if(DropDataContext is string[] arr)
-            //    {
-            //        Trace.WriteLine("Dropped: ");
-            //        foreach(string path in arr)
-            //        {
-            //            Trace.WriteLine(path);
-            //        }
-            //    }
-            //}
-
-            //e.Handled = true;
-
         }
 
         private void ListView_Drop(object sender, DragEventArgs e)
         {
-            Trace.WriteLine("DataDropped inside ListView");
+            object DropDataContext = e.Data.GetData(DataFormats.FileDrop);
+
+            string[] paths = (string[])DropDataContext;
+
+            ((FileManagerViewModel)DataContext).DropFilesCommand.Execute(paths);
         }
 
         private void ListView_DragEnter(object sender, DragEventArgs e)
@@ -225,44 +205,59 @@ namespace File_manager
             Trace.WriteLine("Trying to drop a data into listview");
         }
 
-
-        private void ListView_PreviewDrop(object sender, DragEventArgs e)
-        {
-            if(sender is ListViewItem item && item.DataContext is ListItemViewModel viewModel) 
-            {
-                Trace.WriteLine("Moved into FIleItem");
-            }
-            else if(sender is ListView view && view.DataContext is FileListViewModel grid)
-            {
-                Trace.WriteLine("Moved into ListView");
-            }
-
-            e.Handled = true;
-        }
-
-        private void ListView_PreviewMouseMove(object sender, MouseEventArgs e)
+        private void FileListView_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && sender is ListView listView)
             {
 
-                var selected = listView.SelectedItems;
-                Trace.WriteLine("Selected: ");
 
-                List<string> paths = new();
-                foreach (var item in selected)
-                {
-                    paths.Add((item as ListItemViewModel).FullName);
-                }
 
-                
 
             }
-
-
-
-
         }
 
-        
+
+
+        //private void ListView_PreviewDrop(object sender, DragEventArgs e)
+        //{
+        //    if(sender is ListViewItem item && item.DataContext is ListItemViewModel viewModel) 
+        //    {
+        //        Trace.WriteLine("Moved into FIleItem");
+        //    }
+        //    else if(sender is ListView view && view.DataContext is FileListViewModel grid)
+        //    {
+        //        Trace.WriteLine("Moved into ListView");
+        //    }
+
+        //    e.Handled = true;
+        //}
+
+        //private void ListView_PreviewMouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (e.LeftButton == MouseButtonState.Pressed && sender is ListView listView)
+        //    {
+
+        //        var selected = listView.SelectedItems;
+        //        Trace.WriteLine("Selected: ");
+
+        //        List<string> paths = new();
+        //        foreach (var item in selected)
+        //        {
+        //            paths.Add((item as ListItemViewModel).FullName);
+        //        }
+
+
+
+        //    }
+        //}
+
+        #endregion
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            InformationWindow information = new InformationWindow();
+            information.Owner = this;
+            information.Show();
+        }
     }
 }

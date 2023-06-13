@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,33 @@ namespace File_manager.FileManager.Services.FileManaging
 
         public void Delete(string path)
         {
-            throw new NotImplementedException();
+            try
+            {
+                FileOperationAPIWrapper.Send(path, 
+                    FileOperationAPIWrapper.FileOperationFlags.FOF_WANTNUKEWARNING |
+                    FileOperationAPIWrapper.FileOperationFlags.FOF_ALLOWUNDO);
+
+                //if (Directory.Exists(path))
+                //{
+                //    Directory.Delete(path, true);
+                //}
+                //else if(File.Exists(path))
+                //{
+                //    File.Delete(path);
+                //}
+            }
+            catch (IOException e)
+            {
+                Trace.WriteLine($"An error occurred while deleting the file: {e.Message}");
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Trace.WriteLine($"Access to the file is denied: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"An error occurred: {e.Message}");
+            }
         }
 
         public void MoveTo(string from, string to)
@@ -42,12 +69,23 @@ namespace File_manager.FileManager.Services.FileManaging
 
         public void MoveToDirectory(string sourcePath, string directory)
         {
-            throw new NotImplementedException();
+            string destination = Path.Combine(directory, Path.GetFileName(sourcePath));
+
+            if (Path.Exists(destination))
+            {
+                throw new Exception("Such path exist");
+            }
+
+            Directory.Move(sourcePath, destination);
         }
 
         public void Rename(string path, string newName)
         {
-            throw new NotImplementedException();
+            string folder = Path.GetDirectoryName(path);
+            string destinationPath = Path.Combine(folder, newName);
+
+            Trace.WriteLine($"Moving from {path} to {destinationPath}");
+            Directory.Move(path, destinationPath);
         }
     }
 }

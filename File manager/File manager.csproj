@@ -74,4 +74,8 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FileManager.Services\FileManaging\Exceptions\" />
+  </ItemGroup>
+
 </Project>

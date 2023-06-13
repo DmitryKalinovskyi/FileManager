@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace File_manager.FileManager.ViewModel.TreeView
 {
-    public abstract class TreeItemViewModel: NotifyViewModel, IDynamicTreeViewItem
+    public abstract class TreeItemViewModel: NotifyViewModel
     {
         public ObservableCollection<TreeItemViewModel> Items { get; set; } = new();
 
@@ -20,21 +20,6 @@ namespace File_manager.FileManager.ViewModel.TreeView
         public abstract string Name { get; }
 
         public bool IsExpanded { get; set; }
-
-        public virtual void Update()
-        {
-            foreach (var item in Items)
-            {
-                if (item is IDynamicTreeViewItem dynamicItem)
-                    dynamicItem.Update();
-            }
-        }
-
-        //public abstract void UpdateItems();
-
-        //public abstract void LoadItems();
-
-        //public abstract void UnloadItems();
 
         protected virtual void Initialize(params object[] args) { }
 

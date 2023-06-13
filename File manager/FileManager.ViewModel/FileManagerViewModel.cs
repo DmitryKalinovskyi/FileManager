@@ -2,57 +2,27 @@
 using File_manager.FileManager.Core.ViewModelBase;
 using File_manager.FileManager.Services;
 using File_manager.FileManager.Services.FileManaging;
+using File_manager.FileManager.View;
+using File_manager.FileManager.ViewModel.ListView;
 using File_manager.FileManager.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace File_manager.FileManager.ViewModel
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
     public class FileManagerViewModel: NotifyViewModel
     {
         #region Commands
-        private RelayCommand _fileItemsToDirectoryCommand;
-        public RelayCommand FileItemsToDirectoryCommand
-        {
-            get
-            {
-                return _fileItemsToDirectoryCommand ?? new RelayCommand((obj) =>
-                {
-                    try
-                    {
-                        ////from and to as string
-                        //var args = obj as object[];
-                        //string[] from = args[0] as string;
-                        //string to = args[1] as string;
-
-                        //if (from == to)
-                        //    return;
-
-                        //if(Path.)
-
-
-                        //foreach(var path in from)
-                        //FileManager.MoveTo(path, to);
-                    }
-                    catch (Exception ex)
-                    {
-                        Trace.WriteLine(ex);
-                    }
-                });
-            }
-        }
-
         private RelayCommand _updateDirectories;
         public RelayCommand UpdateDirectories
         {
@@ -62,8 +32,8 @@ namespace File_manager.FileManager.ViewModel
                 {
                     try
                     {
-                        FileGrid.Update();
                         FileTree.Update();
+                        FileGrid.UpdateItems();
                     }
                     catch (Exception ex)
                     {
@@ -110,8 +80,56 @@ namespace File_manager.FileManager.ViewModel
                         string newFullPath = Path.Combine(path, name);
                         Directory.CreateDirectory(newFullPath);
 
-                        // Update displaying
-                        FileGrid.AddItem(newFullPath);
+                        FileTree.Update();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _createFileCommand;
+        public RelayCommand CreateFileCommand
+        {
+            get
+            {
+                return _createFileCommand ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        string path = FileGrid.Path;
+
+                        if (path == "")
+                        {
+                            MessageBox.Show("You can't create file here!");
+                            return;
+                        }
+
+                        // get free file name
+
+                        string extension = (string)obj;
+                        string name = "New file";
+
+                        if (Path.Exists(Path.Combine(path, name + extension)))
+                        {
+                            int index = 1;
+                            while (true)
+                            {
+                                if (Path.Exists(Path.Combine(path, name + $"({index})" + extension)) == false)
+                                {
+                                    break;
+                                }
+                                index++;
+                            }
+
+                            name += $"({index})";
+                        }
+
+                        string newFullPath = Path.Combine(path, name + extension);
+                        File.Create(newFullPath);
 
                         FileTree.Update();
 
@@ -152,16 +170,67 @@ namespace File_manager.FileManager.ViewModel
             }
         }
 
-
-        private RelayCommand _openDirectoryCommand;
-        public RelayCommand OpenDirectoryCommand
+        private RelayCommand _dropFilesCommand;
+        public RelayCommand DropFilesCommand
         {
             get
             {
-                return _openDirectoryCommand ?? new RelayCommand((obj) =>
+                return _dropFilesCommand ?? new RelayCommand((obj) =>
                 {
                     try
                     {
+                        string[] paths = (string[])obj;
+
+
+                        // try to move all inside current path
+                        foreach (string path in paths)
+                        {
+                            if(Path.GetDirectoryName(path) == FileGrid.Path)
+                            {
+                                MessageBox.Show("Такий файл уже існує в папці!");
+                            }
+                            else
+                            {
+                                // move
+                                FileManager.MoveToDirectory(path, FileGrid.Path);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _dropFilesinDirectoryCommand;
+        public RelayCommand DropFilesinDirectoryCommand
+        {
+            get
+            {
+                return _dropFilesinDirectoryCommand ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        object[] args = (object[])obj;
+
+                        string[] paths = (string[])args[0];
+                        string targetPath = (string)args[1];
+
+                        // try to move all inside [targetPath]
+                        foreach (string path in paths)
+                        {
+                            try
+                            {
+                                // move
+                                FileManager.MoveToDirectory(path, targetPath);
+                            }
+                            catch
+                            {
+                                MessageBox.Show($"Failed to move file {Path.GetFileName(path)} into {targetPath}");
+                            }
+                        }
 
                     }
                     catch (Exception ex)
@@ -171,6 +240,151 @@ namespace File_manager.FileManager.ViewModel
                 });
             }
         }
+
+        private RelayCommand _deleteItems;
+        public RelayCommand DeleteItems
+        {
+            get
+            {
+                return _deleteItems ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        string[] paths = (string[])obj;
+                        Trace.WriteLine("Path to delete:");
+
+                        foreach (string path in paths)
+                        {
+                            Trace.WriteLine(path);
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _deleteItemCommand;
+        public RelayCommand DeleteItemCommand
+        {
+            get
+            {
+                return _deleteItemCommand ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        string path = (string)obj;
+                        Trace.WriteLine("Path to delete: " + path);
+
+                        FileManager.Delete(path);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _openInNewWindow;
+        public RelayCommand OpenInNewWindow
+        {
+            get
+            {
+                return _openInNewWindow ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        string path = (string)obj;
+
+                        ProcessStartInfo startInfo = new ProcessStartInfo();
+                        startInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
+                     //   startInfo.Arguments = path;
+
+                        Process.Start(startInfo);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _openItem;
+        public RelayCommand OpenItem
+        {
+            get
+            {
+                return _openItem ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        ((ListItemViewModel)obj).Open();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _openProperties;
+        public RelayCommand OpenProperties
+        {
+            get
+            {
+                return _openProperties ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        SystemItemPropertiesWindow propertiesWindow = new SystemItemPropertiesWindow();
+                        propertiesWindow.Owner = App.Current.MainWindow;
+                        propertiesWindow.DataContext = obj;
+
+                        propertiesWindow.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+        private RelayCommand _renameItem;
+        public RelayCommand RenameItem
+        {
+            get
+            {
+                return _renameItem ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        object[] args = (object[])obj;
+                        ListItemViewModel item = (ListItemViewModel)args[0];
+
+                        string newName = (string)args[1];
+
+                        FileManager.Rename(item.FullName, newName);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+
+
 
         #endregion
 
@@ -217,20 +431,39 @@ namespace File_manager.FileManager.ViewModel
             }
         }
 
+        public bool ShowExtension
+        {
+            get { return (FileDisplayProperties.NameWithExtension & DisplayProperties) != 0; }
+            set
+            {
+                DisplayProperties = value ?
+                    DisplayProperties | FileDisplayProperties.NameWithExtension :
+                    DisplayProperties & (~FileDisplayProperties.NameWithExtension);
+
+                OnPropertyChanged(nameof(ShowExtension));
+                UpdateDirectories.Execute(null);
+
+            }
+        }
+
         private FileAttributes _allAttributes = Enum.GetValues(typeof(FileAttributes))
     .Cast<FileAttributes>()
     .Aggregate((current, next) => current | next);
 
         public FileAttributes AllowedAttributes;
 
+        public FileDisplayProperties DisplayProperties;
+
         #endregion
 
         public static FileManagerViewModel Instance { get; set; }
 
         public FileListViewModel FileGrid { get; set; }
-        public FIleTreeViewModel FileTree { get; set; }
+        public FileTreeViewModel FileTree { get; set; }
 
         public IFIleManager FileManager { get; set; }
+
+        private string DefaultPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         public FileManagerViewModel()
         {
@@ -239,11 +472,34 @@ namespace File_manager.FileManager.ViewModel
 
             Instance = this;
             AllowedAttributes = _allAttributes;
-            //  FileGrid = new(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-            FileGrid = new("C:\\Users\\Свєта\\Desktop\\IsolatedFolder");
+            //  FileGrid = new();
+            FileGrid = new(DefaultPath);
+            FileTree = new();
+
+            FileManager = new Services.FileManaging.FileManager();
+        }
+
+        public FileManagerViewModel(string[] args)
+        {
+            if (Instance != null)
+                return;
+
+            Instance = this;
+            AllowedAttributes = _allAttributes;
+
+            string path = args.Length > 0? args[0] : DefaultPath;
+
+            FileGrid = new(path);
             FileTree = new();
 
             FileManager = new Services.FileManaging.FileManager();
         }
     }
+
+    [Flags]
+    public enum FileDisplayProperties
+    {
+        NameWithExtension = 1
+    }
+
 }

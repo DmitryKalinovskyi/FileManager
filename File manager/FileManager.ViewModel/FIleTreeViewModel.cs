@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace File_manager.FileManager.ViewModel
 {
-    public class FIleTreeViewModel: NotifyViewModel
+    public class FileTreeViewModel: NotifyViewModel
     {
         public ObservableCollection<TreeItemViewModel> Items{ get; set; }
 
-        public FIleTreeViewModel()
+        public FileTreeViewModel()
         {
             Items = new();
 
@@ -25,17 +25,13 @@ namespace File_manager.FileManager.ViewModel
         private void Initialize()
         {
             CreatePCTreeView();
-            CreateShortCutTreeView();
         }
 
-        private void CreateShortCutTreeView()
-        {
-            //shortcuts
-
-        }
         private void CreatePCTreeView()
         {
             FileGroupTreeView MyPc = new FileGroupTreeView("PcIcon", "My pc");
+            MyPc.IsExpanded = true;
+
 
             // load drives
             var drives = DriveInfo.GetDrives().Select(drive => new DriveItemTreeView(drive.Name));

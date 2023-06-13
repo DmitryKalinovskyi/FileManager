@@ -14,9 +14,11 @@ namespace File_manager.FileManager.ViewModel.ListView
     {
         public abstract Bitmap? IconBitmap { get; }
 
-        public abstract string Name { get; set; }
+        public abstract string DisplayedName { get;}
 
-        public abstract string Extension { get; set; }
+        public abstract string Name { get;}
+
+        public abstract string Extension { get; }
 
         public abstract long Size { get; }
 
@@ -28,6 +30,8 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public abstract float Opacity { get; }
 
-        public abstract void Row_MouseDoubleClick(object sender, MouseButtonEventArgs e);
+        public abstract bool IsDirectory { get; }
+
+        public abstract void Open();
     }
 }
