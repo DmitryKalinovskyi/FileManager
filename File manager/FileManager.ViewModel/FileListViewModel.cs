@@ -138,25 +138,5 @@ namespace File_manager.FileManager.ViewModel
                 Items.Add(file);
             }
         }
-
-        //public void AddItem(string path)
-        //{
-        //    if(File.Exists(path))
-        //    {
-        //        Items.Add(new FileInfoViewModel(new FileInfo(path)));
-        //    }
-        //    else if (Directory.Exists(path))
-        //    {
-        //        Items.Add(new DirectoryInfoViewModel(new DirectoryInfo(path)));
-        //    }
-        //}
-
-        //public void RemoveItem(string path)
-        //{
-        //    var items = Items.Where(item => item.FullName == path);
-
-        //    foreach (var item in items)
-        //        Items.Remove(item);
-        //}
     }
 }

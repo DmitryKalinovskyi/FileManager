@@ -16,7 +16,7 @@ using System.Windows.Resources;
 
 namespace File_manager.FileManager.ViewModel.ListView
 {
-    public class DirectoryInfoViewModel : ListItemViewModel
+    public class DirectoryInfoViewModel : ListItemViewModel, IAttachable
     {
         private readonly DirectoryInfo _directoryInfo;
 
@@ -83,17 +83,10 @@ namespace File_manager.FileManager.ViewModel.ListView
 
         public override string DisplayedName => _directoryInfo.Name;
 
-        //private void Rename(string newName)
-        //{
-        //    string currentDirectory = Path.GetDirectoryName(_directoryInfo.FullName);
+        public void Attach()
+        {
+            FileManagerViewModel.Instance.FileAttached.Attach(FullName);
+        }
 
-        //    string from = Path.Combine(currentDirectory, _directoryInfo.Name);
-        //    string to = Path.Combine(currentDirectory, newName);
-
-        //    Trace.WriteLine($"Moving from {from} to {to}");
-        //    _directoryInfo.MoveTo(to);
-        //}
-
-        // Undefined
     }
 }

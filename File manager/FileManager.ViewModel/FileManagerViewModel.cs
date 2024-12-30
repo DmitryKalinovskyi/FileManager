@@ -1,8 +1,10 @@
 ﻿using File_manager.FileManager.Core.Commands;
 using File_manager.FileManager.Core.ViewModelBase;
+using File_manager.FileManager.Model;
 using File_manager.FileManager.Services;
 using File_manager.FileManager.Services.FileManaging;
 using File_manager.FileManager.View;
+using File_manager.FileManager.ViewModel.AttachedTreeView;
 using File_manager.FileManager.ViewModel.ListView;
 using File_manager.FileManager.ViewModel.TreeView;
 using System;
@@ -15,13 +17,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace File_manager.FileManager.ViewModel
 {
 
-    public class FileManagerViewModel: NotifyViewModel
+    public class FileManagerViewModel : NotifyViewModel
     {
+        public FileManagerModel Model { get; private set; }
+
         #region Commands
         private RelayCommand _updateDirectories;
         public RelayCommand UpdateDirectories
@@ -267,6 +270,26 @@ namespace File_manager.FileManager.ViewModel
                 });
             }
         }
+        
+        private RelayCommand _removeAttachedCommand;
+        public RelayCommand RemoveAttachedCommand
+        {
+            get
+            {
+                return _removeAttachedCommand ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        FileAttached.UnAttach((AttachedItem)obj);                        
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
 
         private RelayCommand _deleteItemCommand;
         public RelayCommand DeleteItemCommand
@@ -304,7 +327,8 @@ namespace File_manager.FileManager.ViewModel
 
                         ProcessStartInfo startInfo = new ProcessStartInfo();
                         startInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
-                     //   startInfo.Arguments = path;
+                        Trace.WriteLine($"Path: {path}");
+                        startInfo.Arguments = path;
 
                         Process.Start(startInfo);
 
@@ -360,6 +384,28 @@ namespace File_manager.FileManager.ViewModel
             }
         }
 
+        private RelayCommand _attachCommand;
+        public RelayCommand AttachCommand
+        {
+            get
+            {
+                return _attachCommand ?? new RelayCommand((obj) =>
+                {
+                    try
+                    {
+                        if(obj is IAttachable)
+                        {
+                            ((IAttachable)obj).Attach();  
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex);
+                    }
+                });
+            }
+        }
+        
         private RelayCommand _renameItem;
         public RelayCommand RenameItem
         {
@@ -383,9 +429,6 @@ namespace File_manager.FileManager.ViewModel
                 });
             }
         }
-
-
-
         #endregion
 
         #region Flags
@@ -394,7 +437,7 @@ namespace File_manager.FileManager.ViewModel
             get { return (FileAttributes.Hidden & AllowedAttributes) != 0; }
             set
             {
-                AllowedAttributes = value ?
+                Model.AllowedAttributes = value ?
                     AllowedAttributes | FileAttributes.Hidden :
                     AllowedAttributes & (~FileAttributes.Hidden);
 
@@ -408,7 +451,7 @@ namespace File_manager.FileManager.ViewModel
             get { return (FileAttributes.ReadOnly & AllowedAttributes) != 0; }
             set
             {
-                AllowedAttributes = value ?
+                Model.AllowedAttributes = value ?
                     AllowedAttributes | FileAttributes.ReadOnly :
                     AllowedAttributes & (~FileAttributes.ReadOnly);
 
@@ -421,7 +464,7 @@ namespace File_manager.FileManager.ViewModel
             get { return (FileAttributes.System & AllowedAttributes) != 0; }
             set
             {
-                AllowedAttributes = value ?
+                Model.AllowedAttributes = value ?
                     AllowedAttributes | FileAttributes.System :
                     AllowedAttributes & (~FileAttributes.System);
 
@@ -436,7 +479,7 @@ namespace File_manager.FileManager.ViewModel
             get { return (FileDisplayProperties.NameWithExtension & DisplayProperties) != 0; }
             set
             {
-                DisplayProperties = value ?
+                Model.DisplayProperties = value ?
                     DisplayProperties | FileDisplayProperties.NameWithExtension :
                     DisplayProperties & (~FileDisplayProperties.NameWithExtension);
 
@@ -446,13 +489,15 @@ namespace File_manager.FileManager.ViewModel
             }
         }
 
-        private FileAttributes _allAttributes = Enum.GetValues(typeof(FileAttributes))
-    .Cast<FileAttributes>()
-    .Aggregate((current, next) => current | next);
+        public FileAttributes AllowedAttributes
+        {
+            get { return Model.AllowedAttributes; }
+        }
 
-        public FileAttributes AllowedAttributes;
-
-        public FileDisplayProperties DisplayProperties;
+        public FileDisplayProperties DisplayProperties
+        {
+            get { return Model.DisplayProperties; }
+        }
 
         #endregion
 
@@ -460,46 +505,57 @@ namespace File_manager.FileManager.ViewModel
 
         public FileListViewModel FileGrid { get; set; }
         public FileTreeViewModel FileTree { get; set; }
+        public FileAttachedTreeViewModel FileAttached { get; set; }
 
         public IFIleManager FileManager { get; set; }
 
-        private string DefaultPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        private static string DefaultPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        public FileManagerViewModel()
+
+        private void LoadModel()
         {
-            if (Instance != null)
-                return;
+            AppDataManager dataManager = ((App)Application.Current).DataManager;
+            string modelName = "manager.info";
 
-            Instance = this;
-            AllowedAttributes = _allAttributes;
-            //  FileGrid = new();
-            FileGrid = new(DefaultPath);
-            FileTree = new();
+            try
+            {
+                Model = dataManager.Load<FileManagerModel>(modelName);
+            }
+            catch(Exception ex)
+            {
+                Model = new FileManagerModel();
+                dataManager.Save(modelName, Model);
+            }
 
-            FileManager = new Services.FileManaging.FileManager();
+            App.Current.Exit += (sender, e) => Save();
         }
 
-        public FileManagerViewModel(string[] args)
+        public void Save()
+        {
+            AppDataManager dataManager = ((App)Application.Current).DataManager;
+            string modelName = "manager.info";
+
+            dataManager.Save(modelName, Model);
+        }
+
+        public FileManagerViewModel(): this(DefaultPath) { }
+
+        public FileManagerViewModel(string[] args) : this(args.Length > 0 ? string.Join(" ", args) : DefaultPath) { }
+
+        public FileManagerViewModel(string path)
         {
             if (Instance != null)
                 return;
-
             Instance = this;
-            AllowedAttributes = _allAttributes;
 
-            string path = args.Length > 0? args[0] : DefaultPath;
+            LoadModel();
 
             FileGrid = new(path);
             FileTree = new();
+            FileAttached = new();
 
             FileManager = new Services.FileManaging.FileManager();
         }
-    }
 
-    [Flags]
-    public enum FileDisplayProperties
-    {
-        NameWithExtension = 1
     }
-
 }

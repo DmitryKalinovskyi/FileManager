@@ -5,21 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:File_manager.FileManager.View"
         mc:Ignorable="d"
-        Title="Information" Height="300" Width="250"
+        Title="Information" Height="300" Width="300"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <TabControl>
-            <TabItem Header="Про">
-                <Border Margin="10, 10, 10, 10"
-                        CornerRadius="10"
-                        Background="AliceBlue">
-                    <TextBlock >
-                        Файловий менеджер
-                    </TextBlock>
-                </Border>
-            </TabItem>
             <TabItem Header="Функцінал">
-                
+                <ScrollViewer Padding="10, 10, 10, 10">
+                    
+                <TextBlock TextWrapping="Wrap">
+                    - Переміщення по директоріях <LineBreak/>
+- Відриття файлів<LineBreak/>
+- Відриття та перегляд файлу в новому вікні<LineBreak/>
+- Властивості файлу<LineBreak/>
+- Зміна назви файлу<LineBreak/>
+- Створення файлів, та директорій<LineBreak/>
+- Відображення файлів з певним атрибутом<LineBreak/>
+- Відображення файлів з розширенням та без<LineBreak/>
+- Директорії у вигляді дерева<LineBreak/>
+- Можливість закріпити, та відкрипити директорію або файл на панелі<LineBreak/>
+- Ліниве завантаження директорій<LineBreak/>
+- Спостерігач директорій для динамічного оновлення (File watcher)<LineBreak/>
+- Перетягування файлів будь куди в обидві сторони<LineBreak/>
+- Видалення файлів<LineBreak/>
+                </TextBlock>
+                </ScrollViewer>
+
             </TabItem>
         </TabControl>
     </Grid>

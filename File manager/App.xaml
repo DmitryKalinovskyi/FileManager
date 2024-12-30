@@ -1,4 +1,5 @@
 ﻿<Application x:Class="File_manager.App"
+             xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:File_manager"
@@ -9,6 +10,9 @@
                 <ResourceDictionary Source="FileManager.Resources\FileGrid.xaml"/>
                 <ResourceDictionary Source="FileManager.Resources\Images.xaml"/>
                 <ResourceDictionary Source="FileManager.Resources\CustomButtons.xaml"/>
+                <ResourceDictionary>
+                    <clr:String x:Key="Save location">%appdata%\Artemyshin manager\</clr:String>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

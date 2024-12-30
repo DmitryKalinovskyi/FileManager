@@ -215,42 +215,6 @@ namespace File_manager
 
             }
         }
-
-
-
-        //private void ListView_PreviewDrop(object sender, DragEventArgs e)
-        //{
-        //    if(sender is ListViewItem item && item.DataContext is ListItemViewModel viewModel) 
-        //    {
-        //        Trace.WriteLine("Moved into FIleItem");
-        //    }
-        //    else if(sender is ListView view && view.DataContext is FileListViewModel grid)
-        //    {
-        //        Trace.WriteLine("Moved into ListView");
-        //    }
-
-        //    e.Handled = true;
-        //}
-
-        //private void ListView_PreviewMouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (e.LeftButton == MouseButtonState.Pressed && sender is ListView listView)
-        //    {
-
-        //        var selected = listView.SelectedItems;
-        //        Trace.WriteLine("Selected: ");
-
-        //        List<string> paths = new();
-        //        foreach (var item in selected)
-        //        {
-        //            paths.Add((item as ListItemViewModel).FullName);
-        //        }
-
-
-
-        //    }
-        //}
-
         #endregion
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

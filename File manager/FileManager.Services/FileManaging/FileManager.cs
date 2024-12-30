@@ -27,15 +27,6 @@ namespace File_manager.FileManager.Services.FileManaging
                 FileOperationAPIWrapper.Send(path, 
                     FileOperationAPIWrapper.FileOperationFlags.FOF_WANTNUKEWARNING |
                     FileOperationAPIWrapper.FileOperationFlags.FOF_ALLOWUNDO);
-
-                //if (Directory.Exists(path))
-                //{
-                //    Directory.Delete(path, true);
-                //}
-                //else if(File.Exists(path))
-                //{
-                //    File.Delete(path);
-                //}
             }
             catch (IOException e)
             {

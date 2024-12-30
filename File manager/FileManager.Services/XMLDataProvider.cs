@@ -8,16 +8,9 @@ using System.Xml.Serialization;
 
 namespace File_manager.FileManager.Services
 {
-    internal class XMLDataProvider<T> : IDataProvider<T>
+    internal class XMLDataProvider : IDataProvider
     {
-        private string filePath;
-
-        public XMLDataProvider(string filePath)
-        {
-            this.filePath = filePath;
-        }
-
-        public T Load()
+        public T Load<T>(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -38,7 +31,7 @@ namespace File_manager.FileManager.Services
             }
         }
 
-        public void Save(T data)
+        public void Save<T>(string filePath, T data)
         {
             try
             {

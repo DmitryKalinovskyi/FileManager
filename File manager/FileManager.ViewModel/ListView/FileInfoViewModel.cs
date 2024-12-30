@@ -16,15 +16,9 @@ namespace File_manager.FileManager.ViewModel.ListView
     /// <summary>
     /// Manages FileInfo in directories and his properties
     /// </summary>
-    public class FileInfoViewModel: ListItemViewModel
+    public class FileInfoViewModel: ListItemViewModel, IAttachable
     {
         private readonly FileInfo _fileInfo;
-
-      //  public FileAttributes FileAttributes { get; set; }
-
-     //   public ObservableCollection<FileAttributes> EditableAttributes = new ObservableCollection<FileAttributes> { FileAttributes.Hidden };
-
-     //   public ObservableCollection<FileAttributes> DisplayableAttributes = new ObservableCollection<FileAttributes> { FileAttributes.System };
 
         public FileInfoViewModel(FileInfo fileInfo)
         {
@@ -53,7 +47,6 @@ namespace File_manager.FileManager.ViewModel.ListView
                 Trace.WriteLine("FileInfoWrapper initialization failed...");
             }
         }
-
 
         public override Bitmap? IconBitmap => _iconBitmap;
 
@@ -103,5 +96,10 @@ namespace File_manager.FileManager.ViewModel.ListView
         public override float Opacity => ((_fileInfo.Attributes & FileAttributes.System) != 0) || ((_fileInfo.Attributes & FileAttributes.Hidden) != 0)?0.5f:1f;
 
         public override bool IsDirectory => false;
+
+        public void Attach()
+        {
+            FileManagerViewModel.Instance.FileAttached.Attach(FullName);
+        }
     }
 }

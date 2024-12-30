@@ -45,15 +45,6 @@ namespace File_manager.FileManager.View
 
                 FileManagerViewModel.Instance.RenameItem.Execute(new object[] { DataContext, textBox.Text });
 
-
-
-                //BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
-
-                //if (bindingExpression != null)
-                //{
-                //    bindingExpression.UpdateSource();
-                //}
-
                 Keyboard.ClearFocus();
                 e.Handled = true;
             }

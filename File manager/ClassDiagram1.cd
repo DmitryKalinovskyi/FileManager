@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="File_manager.FileManager.Attributes.DataGridDisplayAttribute" Collapsed="true">
+    <Position X="25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Attributes\DataGridDisplayAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Converters.BitMapToImageSourceConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Converters\BitMapToImageSourceConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.Converters.FileSizeFormatConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>FileManager.Converters\FileSizeFormatConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.Converters.IconByFileExtensionConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Converters\IconByFileExtensionConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.Core.Commands.RelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAEAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Core\Commands\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.Core.ViewModelBase.NotifyViewModel" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Core\ViewModelBase\NotifyViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.Model.FileManagerModel" Collapsed="true">
+    <Position X="32" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAgAAA=</HashCode>
+      <FileName>FileManager.Model\FileManagerModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.FileManaging.FileManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAIAAAAAAAAAAAAAEIAEAAAAAAgAAAgAA=</HashCode>
+      <FileName>FileManager.Services\FileManaging\FileManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FileOperationAPIWrapper" Collapsed="true">
+    <Position X="26.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAEFAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\FileManaging\FileOperationAPIWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.Utilities.CustomResources" Collapsed="true">
+    <Position X="32" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAEAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\Utilities\CustomResources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.Utilities.PathHelper" Collapsed="true">
+    <Position X="26.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\Utilities\PathHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.AppDataManager" Collapsed="true">
+    <Position X="26.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgoAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\AppDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.DataLoadException" Collapsed="true">
+    <Position X="26.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\IDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.DataSaveException" Collapsed="true">
+    <Position X="28.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\IDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.Services.XMLDataProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\XMLDataProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.ValidationRules.FileNamingRule" Collapsed="true">
+    <Position X="25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ValidationRules\FileNamingRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ValidationRules.PathRule" Collapsed="true">
+    <Position X="28.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ValidationRules\PathRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.View.InformationWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.View\InformationWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.View.SystemItemPropertiesWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAEAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>FileManager.View\SystemItemPropertiesWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.AttachedTreeView.AttachedContainer" Collapsed="true">
+    <Position X="28.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\AttachedTreeView\AttachedContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.AttachedTreeView.AttachedDirectory" Collapsed="true">
+    <Position X="20.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIQAAAAAAAAQAAAAAAAAAAAAAQAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\AttachedTreeView\AttachedDirectory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.AttachedTreeView.AttachedFile" Collapsed="true">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIQAAAAAAAAQAAAAAAAAAAAAAQAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\AttachedTreeView\AttachedFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.AttachedTreeView.AttachedItem" Collapsed="true">
+    <Position X="21.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAIAAAAAAAQABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\AttachedTreeView\AttachedItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.ListView.DirectoryInfoViewModel" Collapsed="true">
+    <Position X="6.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEAAAAAAQoYAAAAAAAAQAIIAAAQAAAAAAgAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\ListView\DirectoryInfoViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.ListView.DriveInfoViewModel" Collapsed="true">
+    <Position X="9" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEAAAAAAAoYAAAAAAAAQAIIAAAQAAAEAAgAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\ListView\DriveInfoViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.ListView.FileInfoViewModel" Collapsed="true">
+    <Position X="11.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEAAAAAAAoYAAAAAAAAQAIIAAAQAAAAAAgAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\ListView\FileInfoViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.ListView.ListItemViewModel" Collapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEAAAAAAAoIAAAAAAAAQAIIAAAQAAAAAAgAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\ListView\ListItemViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.DirectoryBehaviorTreeView" Collapsed="true">
+    <Position X="13" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgACAAAAAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\DirectoryBehaviorTreeView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.DirectoryItemTreeView" Collapsed="true">
+    <Position X="13" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIQAAAAAAAAQAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\DirectoryItemTreeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.DriveItemTreeView" Collapsed="true">
+    <Position X="17.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIQAAAAAAAAQAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\DriveItemTreeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.DynamicTreeItemViewModel" Collapsed="true">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\DynamicTreeItemViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.EmptyItemTreeView" Collapsed="true">
+    <Position X="15.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\EmptyItemTreeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.FileGroupTreeView" Collapsed="true">
+    <Position X="18" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAIQAAAAAAAAQAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\FileGroupTreeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.ShortcutItemTreeView" Collapsed="true">
+    <Position X="15.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAIQAAAAAAAAQAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\ShortcutItemTreeView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.TreeView.TreeItemViewModel" Collapsed="true">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAKQAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\TreeItemViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.FileAttachedTreeViewModel" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="File_manager.FileManager.Core.ViewModelBase.NotifyViewModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10" Y="1.062" />
+        <Point X="10" Y="1.407" />
+        <Point X="12.293" Y="1.407" />
+        <Point X="12.293" Y="1.191" />
+        <Point X="12.062" Y="1.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAEQAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\FileAttachedTreeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.FileListViewModel" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="File_manager.FileManager.Core.ViewModelBase.NotifyViewModel" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="10" Y="1.062" />
+        <Point X="10" Y="1.393" />
+        <Point X="14" Y="1.393" />
+        <Point X="14" Y="1.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACCAIAAAAIAAACgAAAAQAAAAAAAAAAAgA=</HashCode>
+      <FileName>FileManager.ViewModel\FileListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.FileManagerViewModel" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="File_manager.FileManager.Core.ViewModelBase.NotifyViewModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10" Y="1.062" />
+        <Point X="10" Y="1.385" />
+        <Point X="16.25" Y="1.385" />
+        <Point X="16.25" Y="1.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>gABRIoAUAQAABAATAgAMFAJAJgCQJAAAQgwIAAGoEAg=</HashCode>
+      <FileName>FileManager.ViewModel\FileManagerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.FileManager.ViewModel.FileTreeViewModel" Collapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAACQAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\FileTreeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.App" Collapsed="true">
+    <Position X="25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File_manager.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAoABAAAEAAAAAAIAAgIAQFAAqAAAAAAAAEAQAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="File_manager.FileManager.Services.FileManaging.IFIleCreator" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\FileManaging\IFIleCreator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.Services.FileManaging.IFileDeleter" Collapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\FileManaging\IFileDeleter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.Services.FileManaging.IFIleManager" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAgAAAgAA=</HashCode>
+      <FileName>FileManager.Services\FileManaging\IFIleManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.Services.FileManaging.IFIleOpener" Collapsed="true">
+    <Position X="4.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\FileManaging\IFIleOpener.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.Services.IDataProvider" Collapsed="true">
+    <Position X="26.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Services\IDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.ViewModel.ListView.IAttachable" Collapsed="true">
+    <Position X="25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\ListView\IAttachable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.ViewModel.TreeView.IDynamicTreeViewItem" Collapsed="true">
+    <Position X="28.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\IDynamicTreeViewItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.ViewModel.TreeView.ILazyLoader" Collapsed="true">
+    <Position X="30.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\ILazyLoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="File_manager.FileManager.ViewModel.TreeView.ISelectableTreeItem" Collapsed="true">
+    <Position X="32" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>FileManager.ViewModel\TreeView\ISelectableTreeItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="File_manager.FileManager.Model.FileDisplayProperties" Collapsed="true">
+    <Position X="25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.Model\FileManagerModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

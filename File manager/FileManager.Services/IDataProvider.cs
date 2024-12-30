@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace File_manager.FileManager.Services
 {
-    public interface IDataProvider<T>
+    public interface IDataProvider
     {
-        public void Save(T data);
+        public void Save<T>(string path, T data);
 
-        public T Load();
+        public T Load<T>(string path);
     }
 
     public class DataLoadException : Exception

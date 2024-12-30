@@ -73,5 +73,6 @@ namespace File_manager.FileManager.ViewModel.ListView
             FileManagerViewModel.Instance.FileGrid.Path = _driveInfo.Name;
 
         }
+        
     }
 }

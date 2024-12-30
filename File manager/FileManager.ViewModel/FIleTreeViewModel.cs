@@ -62,6 +62,8 @@ namespace File_manager.FileManager.ViewModel
             Items.Add(MyPc);
         }
 
+      
+
         public void Update()
         {
             foreach (var item in Items)
